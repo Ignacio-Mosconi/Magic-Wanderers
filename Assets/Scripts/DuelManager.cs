@@ -27,11 +27,13 @@ public class DuelManager : MonoBehaviour
 	}
     #endregion
 	[SerializeField] GameObject[] layouts;
-	[SerializeField] GameObject duelMenu;
-	[SerializeField] Button duelMenuMainButton;
+	[SerializeField] string duelMenuGameObjectName;
+	[SerializeField] string duelMenuButtonGameObjectName;
 
 	const float PostDiceThrowDelay = 0.1f;
 
+    GameObject duelMenu;
+    Button duelMenuMainButton;
 	LifeCounter[] playersLifecounters;
 	ExtrasCounter[] playersExtrasCounters;
 	BackgroundChanger[] playersBackgroundChangers;
@@ -60,40 +62,6 @@ public class DuelManager : MonoBehaviour
 			duelMenuButtons[i] = element.GetComponent<Button>();
 			i++;
 		}
-	}
-
-	void OnEnable()
-    {
-        foreach (GameObject layout in layouts)
-            layout.SetActive(false);
-
-        switch (AppManager.Instance.NumberOfPlayers)
-        {
-            case 2:
-                layouts[0].SetActive(true);
-                break;
-            case 3:
-                layouts[1].SetActive(true);
-                break;
-            case 4:
-                layouts[2].SetActive(true);
-                break;
-            default:
-                Debug.LogError("Warning: the number of players might be wrong.");
-                break;
-        }
-
-        playersLifecounters = new LifeCounter[AppManager.Instance.NumberOfPlayers];
-        playersExtrasCounters = new ExtrasCounter[AppManager.Instance.NumberOfPlayers];
-        playersBackgroundChangers = new BackgroundChanger[AppManager.Instance.NumberOfPlayers];
-        playersDiceThrowers = new DiceThrower[AppManager.Instance.NumberOfPlayers];
-        playersUIHandlers = new UIHandler[AppManager.Instance.NumberOfPlayers];
-
-        playersLifecounters = GetComponentsInChildren<LifeCounter>();
-        playersExtrasCounters = GetComponentsInChildren<ExtrasCounter>();
-        playersBackgroundChangers = GetComponentsInChildren<BackgroundChanger>();
-        playersDiceThrowers = GetComponentsInChildren<DiceThrower>();
-        playersUIHandlers = GetComponentsInChildren<UIHandler>();
 	}
 
 	void Start()
@@ -178,6 +146,46 @@ public class DuelManager : MonoBehaviour
 			handler.ShowLife();
 		}
 	}
+
+    public void SetUpBoard()
+    {
+        foreach (GameObject layout in layouts)
+            layout.SetActive(false);
+
+        switch (AppManager.Instance.NumberOfPlayers)
+        {
+            case 2:
+                layouts[0].SetActive(true);
+				duelMenu = layouts[0].transform.Find(duelMenuGameObjectName).gameObject;
+				duelMenuMainButton = layouts[0].transform.Find(duelMenuButtonGameObjectName).GetComponent<Button>();
+                break;
+            case 3:
+                layouts[1].SetActive(true);
+                duelMenu = layouts[1].transform.Find(duelMenuGameObjectName).gameObject;
+                duelMenuMainButton = layouts[1].transform.Find(duelMenuButtonGameObjectName).GetComponent<Button>();
+                break;
+            case 4:
+                layouts[2].SetActive(true);
+                duelMenu = layouts[2].transform.Find(duelMenuGameObjectName).gameObject;
+                duelMenuMainButton = layouts[2].transform.Find(duelMenuButtonGameObjectName).GetComponent<Button>();
+                break;
+            default:
+                Debug.LogError("Warning: the number of players might be wrong.");
+                break;
+        }
+
+        playersLifecounters = new LifeCounter[AppManager.Instance.NumberOfPlayers];
+        playersExtrasCounters = new ExtrasCounter[AppManager.Instance.NumberOfPlayers];
+        playersBackgroundChangers = new BackgroundChanger[AppManager.Instance.NumberOfPlayers];
+        playersDiceThrowers = new DiceThrower[AppManager.Instance.NumberOfPlayers];
+        playersUIHandlers = new UIHandler[AppManager.Instance.NumberOfPlayers];
+
+        playersLifecounters = GetComponentsInChildren<LifeCounter>();
+        playersExtrasCounters = GetComponentsInChildren<ExtrasCounter>();
+        playersBackgroundChangers = GetComponentsInChildren<BackgroundChanger>();
+        playersDiceThrowers = GetComponentsInChildren<DiceThrower>();
+        playersUIHandlers = GetComponentsInChildren<UIHandler>();
+    }
 
 	public void ToggleMenu()
 	{

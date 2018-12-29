@@ -43,6 +43,8 @@ public class AppManager : MonoBehaviour
         startingLife = PlayerPrefs.GetInt("StartingLife", 20);
         sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
+
+        DuelManager.Instance.SetUpBoard();
     }
 
     #region Getters & Setters
