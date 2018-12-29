@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Duel Menu
+  m_Controller: {fileID: 9100000, guid: 22ae20b37a9854645a201feb49aa6f09, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 604e0ee90243c4e48a517828b76dc0cf, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ebb4df9e6e5a6ee40b622794dd285216, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9158ecb37a511cf458f111126a9e06f6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9670769fba319774c9f61449d2042ac7, type: 2}
