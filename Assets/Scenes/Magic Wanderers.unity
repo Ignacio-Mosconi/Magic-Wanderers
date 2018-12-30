@@ -279,6 +279,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 875346805041451038, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_Name
+      value: Duel Manager
+      objectReference: {fileID: 0}
     - target: {fileID: 4303778649722339540, guid: 559b995051dea2b49903138c1f254712,
         type: 3}
       propertyPath: m_isInputParsingRequired
@@ -428,11 +433,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 875346805041451038, guid: 559b995051dea2b49903138c1f254712,
-        type: 3}
-      propertyPath: m_Name
-      value: Duel Manager
       objectReference: {fileID: 0}
     - target: {fileID: 4346249804785730949, guid: 559b995051dea2b49903138c1f254712,
         type: 3}
@@ -798,6 +798,111 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5885561266726457526, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354889477326195894, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354889477326195894, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354742857673438900, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354742857673438900, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8357994383836175422, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8357994383836175422, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974413385721230697, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974413385721230697, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974269235538857835, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974269235538857835, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975266771524789729, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975266771524789729, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989070621711049848, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989070621711049848, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8988936302297259642, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8988936302297259642, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984839792723375344, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984839792723375344, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 875346805802167152, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_Name
+      value: Duel Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4448439565850340545, guid: 559b995051dea2b49903138c1f254712,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 559b995051dea2b49903138c1f254712, type: 3}
