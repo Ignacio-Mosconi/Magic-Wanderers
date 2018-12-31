@@ -35,6 +35,11 @@ public class AppManager : MonoBehaviour
 
     void Awake()
     {
+        LoadPreferences();
+    }
+
+    void LoadPreferences()
+    {
         defaultSymbols = new Symbol[MaxPlayers];
 
         numberOfPlayers = PlayerPrefs.GetInt("NumberOfPlayers", MinPlayers);
@@ -43,8 +48,6 @@ public class AppManager : MonoBehaviour
         startingLife = PlayerPrefs.GetInt("StartingLife", 20);
         sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
-
-        DuelManager.Instance.SetUpBoard();
     }
 
     #region Getters & Setters
