@@ -24,7 +24,8 @@ public class LifeCounter : MonoBehaviour
     {
         while (increaseButton.gameObject.activeInHierarchy)
         {
-            IncreaseLife();
+            if (decreaseLifeRoutine == null)
+                IncreaseLife();
             yield return new WaitForSeconds(HoldValueChangeInterval);
         }
     }
@@ -33,7 +34,8 @@ public class LifeCounter : MonoBehaviour
     {
         while (decreaseButton.gameObject.activeInHierarchy)
         {
-            DecreaseLife();
+            if (increaseLifeRoutine == null)
+                DecreaseLife();
             yield return new WaitForSeconds(HoldValueChangeInterval);
         }
     }
@@ -51,7 +53,10 @@ public class LifeCounter : MonoBehaviour
                     lifeText.color = Color.yellow;
         }
         if (life == MaxLife)
+        {
             increaseButton.gameObject.SetActive(false);
+            increaseLifeRoutine = null;
+        }
         if (!decreaseButton.isActiveAndEnabled)
             decreaseButton.gameObject.SetActive(true);
     }
@@ -69,7 +74,10 @@ public class LifeCounter : MonoBehaviour
                     lifeText.color = Color.yellow;
         }
         if (life == MinLife)
+        {
             decreaseButton.gameObject.SetActive(false);
+            decreaseLifeRoutine = null;
+        }
         if (!increaseButton.isActiveAndEnabled)
             increaseButton.gameObject.SetActive(true);
     }
@@ -93,13 +101,19 @@ public class LifeCounter : MonoBehaviour
 
     public void IncreaseLifeOnRelease()
     {
-        StopCoroutine(increaseLifeRoutine);
-        increaseLifeRoutine = null;
+        if (increaseLifeRoutine != null)
+        {
+            StopCoroutine(increaseLifeRoutine);
+            increaseLifeRoutine = null;
+        }
     }
 
     public void DecreaseLifeOnRelease()
     {
-        StopCoroutine(decreaseLifeRoutine);
-        decreaseLifeRoutine = null;
+        if (decreaseLifeRoutine != null)
+        {
+            StopCoroutine(decreaseLifeRoutine);
+            decreaseLifeRoutine = null;
+        }
     }
 }
