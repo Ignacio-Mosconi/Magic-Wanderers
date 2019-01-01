@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -13,10 +14,31 @@ public class LifeCounter : MonoBehaviour
     const int WarningLife = 10;
     const int CriticalLife = 5;
     const int DefaultLife = 20;
+    const float HoldValueChangeInterval = 0.15f;
 
+    Coroutine increaseLifeRoutine;
+    Coroutine decreaseLifeRoutine;
 	int life = DefaultLife;
 
-    public void IncreaseLife()
+    IEnumerator IncreaseLifeGradually()
+    {
+        while (increaseButton.gameObject.activeInHierarchy)
+        {
+            IncreaseLife();
+            yield return new WaitForSeconds(HoldValueChangeInterval);
+        }
+    }
+
+    IEnumerator DecreaseLifeGradually()
+    {
+        while (decreaseButton.gameObject.activeInHierarchy)
+        {
+            DecreaseLife();
+            yield return new WaitForSeconds(HoldValueChangeInterval);
+        }
+    }
+
+    void IncreaseLife()
     {
         life++;
         lifeText.text = life.ToString();
@@ -34,7 +56,7 @@ public class LifeCounter : MonoBehaviour
             decreaseButton.gameObject.SetActive(true);
     }
 
-    public void DecreaseLife()
+    void DecreaseLife()
     {
         life--;
         lifeText.text = life.ToString();
@@ -57,5 +79,27 @@ public class LifeCounter : MonoBehaviour
         life = DefaultLife;
         lifeText.text = life.ToString();
         lifeText.color = Color.white;
+    }
+
+    public void IncreaseLifeOnHold()
+    {
+        increaseLifeRoutine = StartCoroutine(IncreaseLifeGradually());
+    }
+
+    public void DecreaseLifeOnHold()
+    {
+        decreaseLifeRoutine = StartCoroutine(DecreaseLifeGradually());
+    }
+
+    public void IncreaseLifeOnRelease()
+    {
+        StopCoroutine(increaseLifeRoutine);
+        increaseLifeRoutine = null;
+    }
+
+    public void DecreaseLifeOnRelease()
+    {
+        StopCoroutine(decreaseLifeRoutine);
+        decreaseLifeRoutine = null;
     }
 }

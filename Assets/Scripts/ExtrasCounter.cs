@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -25,16 +26,78 @@ public class ExtrasCounter : MonoBehaviour
 	const int CriticalLoyalty = 3;
 	const int MaxEnergy = 99;
 	const int MinEnergy = 0;
+    const float HoldValueChangeInterval = 0.15f;
 
 	Dictionary<CounterType, int> countersDictionary = new Dictionary<CounterType, int>();
+    Coroutine[] increaseRoutines;
+    Coroutine[] decreaseRoutines;
 
 	void Awake()
 	{
+        increaseRoutines = new Coroutine[(int)CounterType.Count];
+        decreaseRoutines = new Coroutine[(int)CounterType.Count];
+
 		for (int i = 0; i < (int)CounterType.Count; i++)
 			countersDictionary.Add((CounterType)i, 0);
 	}
 
-	public void IncreasePoisonCounter()
+    IEnumerator IncreaseCounterGradually(CounterType counterType)
+    {
+        switch (counterType)
+        {
+            case CounterType.Poison:
+                while (increaseButtons[(int)CounterType.Poison].gameObject.activeInHierarchy)
+                {
+                    IncreasePoisonCounter();
+                    yield return new WaitForSeconds(HoldValueChangeInterval);
+                }
+                break;
+            case CounterType.Loyalty:
+                while (increaseButtons[(int)CounterType.Loyalty].gameObject.activeInHierarchy)
+                {
+                    IncreaseLoyaltyCounter();
+                    yield return new WaitForSeconds(HoldValueChangeInterval);
+                }
+                break;
+            case CounterType.Energy:
+                while (increaseButtons[(int)CounterType.Energy].gameObject.activeInHierarchy)
+                {
+                    IncreaseEnergyCounter();
+                    yield return new WaitForSeconds(HoldValueChangeInterval);
+                }
+                break;
+        }
+    }
+
+    IEnumerator DecreaseCounterGradually(CounterType counterType)
+    {
+        switch (counterType)
+        {
+            case CounterType.Poison:
+                while (decreaseButtons[(int)CounterType.Poison].gameObject.activeInHierarchy)
+                {
+                    DecreasePoisonCounter();
+                    yield return new WaitForSeconds(HoldValueChangeInterval);
+                }
+                break;
+            case CounterType.Loyalty:
+                while (decreaseButtons[(int)CounterType.Loyalty].gameObject.activeInHierarchy)
+                {
+                    DecreaseLoyaltyCounter();
+                    yield return new WaitForSeconds(HoldValueChangeInterval);
+                }
+                break;
+            case CounterType.Energy:
+                while (decreaseButtons[(int)CounterType.Energy].gameObject.activeInHierarchy)
+                {
+                    DecreaseEnergyCounter();
+                    yield return new WaitForSeconds(HoldValueChangeInterval);
+                }
+                break;
+        }
+    }
+
+	void IncreasePoisonCounter()
 	{
 		countersDictionary[CounterType.Poison]++;
 		countersTexts[(int)CounterType.Poison].text = countersDictionary[CounterType.Poison].ToString();
@@ -46,7 +109,7 @@ public class ExtrasCounter : MonoBehaviour
 			decreaseButtons[(int)CounterType.Poison].gameObject.SetActive(true);
 	}
 
-    public void DecreasePoisonCounter()
+    void DecreasePoisonCounter()
     {
         countersDictionary[CounterType.Poison]--;
         countersTexts[(int)CounterType.Poison].text = countersDictionary[CounterType.Poison].ToString();
@@ -58,7 +121,7 @@ public class ExtrasCounter : MonoBehaviour
             increaseButtons[(int)CounterType.Poison].gameObject.SetActive(true);
     }
 
-    public void IncreaseLoyaltyCounter()
+    void IncreaseLoyaltyCounter()
     {
         countersDictionary[CounterType.Loyalty]++;
         countersTexts[(int)CounterType.Loyalty].text = countersDictionary[CounterType.Loyalty].ToString();
@@ -70,7 +133,7 @@ public class ExtrasCounter : MonoBehaviour
             decreaseButtons[(int)CounterType.Loyalty].gameObject.SetActive(true);
     }
 
-    public void DecreaseLoyaltyCounter()
+    void DecreaseLoyaltyCounter()
     {
         countersDictionary[CounterType.Loyalty]--;
         countersTexts[(int)CounterType.Loyalty].text = countersDictionary[CounterType.Loyalty].ToString();
@@ -82,7 +145,7 @@ public class ExtrasCounter : MonoBehaviour
             increaseButtons[(int)CounterType.Loyalty].gameObject.SetActive(true);
     }
 
-    public void IncreaseEnergyCounter()
+    void IncreaseEnergyCounter()
     {
         countersDictionary[CounterType.Energy]++;
         countersTexts[(int)CounterType.Energy].text = countersDictionary[CounterType.Energy].ToString();
@@ -92,7 +155,7 @@ public class ExtrasCounter : MonoBehaviour
             decreaseButtons[(int)CounterType.Energy].gameObject.SetActive(true);
     }
 
-    public void DecreaseEnergyCounter()
+    void DecreaseEnergyCounter()
     {
         countersDictionary[CounterType.Energy]--;
         countersTexts[(int)CounterType.Energy].text = countersDictionary[CounterType.Energy].ToString();
@@ -115,4 +178,46 @@ public class ExtrasCounter : MonoBehaviour
 				decreaseButtons[i].gameObject.SetActive(false);		
 		}
 	}
+
+    public void IncreaseCounterOnHold(int counterTypeIndex)
+    {
+        switch ((CounterType)counterTypeIndex)
+        {
+            case CounterType.Poison:
+            case CounterType.Loyalty:
+            case CounterType.Energy:
+                increaseRoutines[counterTypeIndex] = StartCoroutine(IncreaseCounterGradually((CounterType)counterTypeIndex));
+                break;
+            default:
+                Debug.LogError("Warning: the index doesn't correspond to any counter type.");
+                break;
+        }
+    }
+
+    public void IncreaseCounterOnRelease(int counterTypeIndex)
+    {
+        StopCoroutine(increaseRoutines[counterTypeIndex]);
+        increaseRoutines[counterTypeIndex] = null;
+    }
+
+    public void DecreaseCounterOnHold(int counterTypeIndex)
+    {
+        switch ((CounterType)counterTypeIndex)
+        {
+            case CounterType.Poison:
+            case CounterType.Loyalty:
+            case CounterType.Energy:
+                decreaseRoutines[counterTypeIndex] = StartCoroutine(DecreaseCounterGradually((CounterType)counterTypeIndex));
+                break;
+            default:
+                Debug.LogError("Warning: the index doesn't correspond to any counter type.");
+                break;
+        }
+    }
+
+    public void DecreaseCounterOnRelease(int counterTypeIndex)
+    {
+        StopCoroutine(decreaseRoutines[counterTypeIndex]);
+        decreaseRoutines[counterTypeIndex] = null;
+    }
 }
