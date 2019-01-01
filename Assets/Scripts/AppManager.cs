@@ -36,6 +36,8 @@ public class AppManager : MonoBehaviour
     void Awake()
     {
         LoadPreferences();
+
+        DuelManager.Instance.SetUpBoard(numberOfPlayers);
     }
 
     void LoadPreferences()
@@ -43,6 +45,7 @@ public class AppManager : MonoBehaviour
         defaultSymbols = new Symbol[MaxPlayers];
 
         numberOfPlayers = PlayerPrefs.GetInt("NumberOfPlayers", MinPlayers);
+        numberOfPlayers = 4;
         for (int i = 0; i < MaxPlayers; i++)
             defaultSymbols[i] = (Symbol)PlayerPrefs.GetInt("Player" + (i + 1) + "Symbol", Random.Range(0, (int)Symbol.Count));
         startingLife = PlayerPrefs.GetInt("StartingLife", 20);

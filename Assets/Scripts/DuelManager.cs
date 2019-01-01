@@ -26,14 +26,25 @@ public class DuelManager : MonoBehaviour
 		}
 	}
     #endregion
+	
+	[Header("UI References")]
 	[SerializeField] GameObject[] layouts;
-	[SerializeField] string duelMenuGameObjectName;
-	[SerializeField] string duelMenuButtonGameObjectName;
+    [SerializeField] GameObject duelMenu;
+    [SerializeField] Button duelMenuMainButton;
+
+	[Header("Duel Menu Anchors")]
+	[SerializeField] Vector2 duelMenuMiddleMinAnchors = new Vector2(0f, 0.4f);
+	[SerializeField] Vector2 duelMenuMiddleMaxAnchors = new Vector2(1f, 0.6f);
+	[SerializeField] Vector2 duelMenuThreePlayersMinAnchors = new Vector2(0f, 0.3f);
+	[SerializeField] Vector2 duelMenuThreePlayersMaxAnchors = new Vector2(1f, 0.5f);
+	[SerializeField] Vector2 duelMenuButtonMiddleMinAnchors = new Vector2(0.4f, 0.45f);
+	[SerializeField] Vector2 duelMenuButtonMiddleMaxAnchors = new Vector2(0.6f, 0.55f);
+	[SerializeField] Vector2 duelMenuButtonThreePlayersMinAnchors = new Vector2(0.4f, 0.35f);
+	[SerializeField] Vector2 duelMenuButtonThreePlayersMaxAnchors = new Vector2(0.6f, 0.45f);
+
 
 	const float PostDiceThrowDelay = 0.1f;
-
-    GameObject duelMenu;
-    Button duelMenuMainButton;
+	
 	LifeCounter[] playersLifecounters;
 	ExtrasCounter[] playersExtrasCounters;
 	BackgroundChanger[] playersBackgroundChangers;
@@ -94,6 +105,13 @@ public class DuelManager : MonoBehaviour
 		duelMenuMainButton.interactable = true;
 	}
 
+	void PositionDuelMenuElement(RectTransform rectTransform, Vector2 minAnchors, Vector2 maxAnchors)
+	{
+       rectTransform.anchorMin = minAnchors;
+       rectTransform.anchorMax = maxAnchors;
+       rectTransform.anchoredPosition = Vector2.zero;
+	}
+
 	IEnumerator PerformDiceRoll(float rollDuration)
 	{
         int highestRoll = 0;
@@ -147,38 +165,41 @@ public class DuelManager : MonoBehaviour
 		}
 	}
 
-    public void SetUpBoard()
+    public void SetUpBoard(int players)
     {
+        RectTransform menuTransform = duelMenu.GetComponent<RectTransform>();
+        RectTransform menuButtonTransform = duelMenuMainButton.GetComponent<RectTransform>();
+
         foreach (GameObject layout in layouts)
             layout.SetActive(false);
 
-        switch (AppManager.Instance.NumberOfPlayers)
+        switch (players)
         {
             case 2:
+				PositionDuelMenuElement(menuTransform, duelMenuMiddleMinAnchors, duelMenuMiddleMaxAnchors);
+				PositionDuelMenuElement(menuButtonTransform, duelMenuButtonMiddleMinAnchors, duelMenuButtonMiddleMaxAnchors);
                 layouts[0].SetActive(true);
-				duelMenu = layouts[0].transform.Find(duelMenuGameObjectName).gameObject;
-				duelMenuMainButton = layouts[0].transform.Find(duelMenuButtonGameObjectName).GetComponent<Button>();
                 break;
             case 3:
-                layouts[1].SetActive(true);
-                duelMenu = layouts[1].transform.Find(duelMenuGameObjectName).gameObject;
-                duelMenuMainButton = layouts[1].transform.Find(duelMenuButtonGameObjectName).GetComponent<Button>();
+                PositionDuelMenuElement(menuTransform, duelMenuThreePlayersMinAnchors, duelMenuThreePlayersMaxAnchors);
+                PositionDuelMenuElement(menuButtonTransform, duelMenuButtonThreePlayersMinAnchors, duelMenuButtonThreePlayersMaxAnchors);
+				layouts[1].SetActive(true);
                 break;
             case 4:
+                PositionDuelMenuElement(menuTransform, duelMenuMiddleMinAnchors, duelMenuMiddleMaxAnchors);
+                PositionDuelMenuElement(menuButtonTransform, duelMenuButtonMiddleMinAnchors, duelMenuButtonMiddleMaxAnchors);
                 layouts[2].SetActive(true);
-                duelMenu = layouts[2].transform.Find(duelMenuGameObjectName).gameObject;
-                duelMenuMainButton = layouts[2].transform.Find(duelMenuButtonGameObjectName).GetComponent<Button>();
                 break;
             default:
                 Debug.LogError("Warning: the number of players might be wrong.");
                 break;
         }
 
-        playersLifecounters = new LifeCounter[AppManager.Instance.NumberOfPlayers];
-        playersExtrasCounters = new ExtrasCounter[AppManager.Instance.NumberOfPlayers];
-        playersBackgroundChangers = new BackgroundChanger[AppManager.Instance.NumberOfPlayers];
-        playersDiceThrowers = new DiceThrower[AppManager.Instance.NumberOfPlayers];
-        playersUIHandlers = new UIHandler[AppManager.Instance.NumberOfPlayers];
+        playersLifecounters = new LifeCounter[players];
+        playersExtrasCounters = new ExtrasCounter[players];
+        playersBackgroundChangers = new BackgroundChanger[players];
+        playersDiceThrowers = new DiceThrower[players];
+        playersUIHandlers = new UIHandler[players];
 
         playersLifecounters = GetComponentsInChildren<LifeCounter>();
         playersExtrasCounters = GetComponentsInChildren<ExtrasCounter>();
