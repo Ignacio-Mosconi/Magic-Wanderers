@@ -37,7 +37,7 @@ public class AppManager : MonoBehaviour
     {
         LoadPreferences();
 
-        DuelManager.Instance.SetUpBoard(numberOfPlayers);
+        //DuelManager.Instance.SetUpBoard(numberOfPlayers);
     }
 
     void LoadPreferences()
