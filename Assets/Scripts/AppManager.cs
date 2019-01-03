@@ -35,9 +35,13 @@ public class AppManager : MonoBehaviour
 
     void Awake()
     {
-        LoadPreferences();
+        if (Instance != this)
+        {
+            Debug.LogError("Warning: more than one App Manager in the secene.", gameObject);
+            return;
+        }
 
-        //DuelManager.Instance.SetUpBoard(numberOfPlayers);
+        LoadPreferences();
     }
 
     void LoadPreferences()

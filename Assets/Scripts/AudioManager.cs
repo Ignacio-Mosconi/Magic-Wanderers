@@ -30,6 +30,12 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != this)
+        {
+            Debug.LogError("Warning: more than one Audio Manager in the secene.", gameObject);
+            return;
+        }
+
         foreach (Sound sound in soundsUI)
         {
             sound.audioSource = gameObject.AddComponent<AudioSource>();

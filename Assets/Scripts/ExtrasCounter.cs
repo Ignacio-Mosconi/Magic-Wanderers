@@ -18,9 +18,11 @@ public class ExtrasCounter : MonoBehaviour
 	[SerializeField] Button[] increaseButtons;
 	[SerializeField] Button[] decreaseButtons;
 
-	const int MaxPoison = 15;
+	const int MaxPoison = 10;
+	const int MaxPoison2v2 = 15;
 	const int MinPoison = 0;
 	const int CriticalPoison = 7;
+	const int CriticalPoison2v2 = 10;
 	const int MaxLoyalty = 99;
 	const int MinLoyalty = 0;
 	const int CriticalLoyalty = 3;
@@ -31,6 +33,8 @@ public class ExtrasCounter : MonoBehaviour
 	Dictionary<CounterType, int> countersDictionary = new Dictionary<CounterType, int>();
     Coroutine[] increaseRoutines;
     Coroutine[] decreaseRoutines;
+    int maxPoison;
+    int criticalPoison;
 
 	void Awake()
 	{
@@ -107,9 +111,9 @@ public class ExtrasCounter : MonoBehaviour
 	{
 		countersDictionary[CounterType.Poison]++;
 		countersTexts[(int)CounterType.Poison].text = countersDictionary[CounterType.Poison].ToString();
-        if (countersTexts[(int)CounterType.Poison].color != Color.red && countersDictionary[CounterType.Poison] >= CriticalPoison)
+        if (countersTexts[(int)CounterType.Poison].color != Color.red && countersDictionary[CounterType.Poison] >= criticalPoison)
             countersTexts[(int)CounterType.Poison].color = Color.red;
-		if (countersDictionary[CounterType.Poison] == MaxPoison)
+		if (countersDictionary[CounterType.Poison] == maxPoison)
         {
 			increaseButtons[(int)CounterType.Poison].gameObject.SetActive(false);
             increaseRoutines[(int)CounterType.Poison] = null;
@@ -122,7 +126,7 @@ public class ExtrasCounter : MonoBehaviour
     {
         countersDictionary[CounterType.Poison]--;
         countersTexts[(int)CounterType.Poison].text = countersDictionary[CounterType.Poison].ToString();
-        if (countersTexts[(int)CounterType.Poison].color != Color.white && countersDictionary[CounterType.Poison] < CriticalPoison)
+        if (countersTexts[(int)CounterType.Poison].color != Color.white && countersDictionary[CounterType.Poison] < criticalPoison)
             countersTexts[(int)CounterType.Poison].color = Color.white;
         if (countersDictionary[CounterType.Poison] == MinPoison)
         {
@@ -248,6 +252,20 @@ public class ExtrasCounter : MonoBehaviour
         {
             StopCoroutine(decreaseRoutines[counterTypeIndex]);
             decreaseRoutines[counterTypeIndex] = null;
+        }
+    }
+
+    public void SetMaxPoison(int players, int startingLife)
+    {
+        if (players == 2 && startingLife == 30)
+        {
+            maxPoison = MaxPoison2v2;
+            criticalPoison = CriticalPoison2v2;
+        }
+        else
+        {
+            maxPoison = MaxPoison;
+            criticalPoison = CriticalPoison;
         }
     }
 }

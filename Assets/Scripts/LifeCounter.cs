@@ -116,4 +116,18 @@ public class LifeCounter : MonoBehaviour
             decreaseLifeRoutine = null;
         }
     }
+
+    public int Life
+    {
+        set 
+        {
+            if (value >= MinLife && value <= MaxLife)
+            {
+                life = value;
+                lifeText.text = life.ToString();
+            }
+            else
+                Debug.LogError("Attempted to set an invalid life value", gameObject);
+        }
+    }
 }

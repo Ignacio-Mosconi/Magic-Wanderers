@@ -35,7 +35,6 @@ public class BackgroundChanger : MonoBehaviour
 			case Symbol.Green:
 				symbolButton.image.sprite = symbolSprites[symbolIndex];
 				backgroundImage.sprite = backgroundSprites[symbolIndex];
-				DuelManager.Instance.SaveBackgroundPreference(this, (Symbol)symbolIndex);
 				break;
 			default:
 				Debug.LogError("The selected symbol doesn't exist.", gameObject);
