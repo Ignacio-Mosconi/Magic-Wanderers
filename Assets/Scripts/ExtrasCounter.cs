@@ -50,28 +50,30 @@ public class ExtrasCounter : MonoBehaviour
         switch (counterType)
         {
             case CounterType.Poison:
-                while (increaseButtons[(int)CounterType.Poison].gameObject.activeInHierarchy)
+                do
                 {
                     if (decreaseRoutines[(int)CounterType.Poison] == null)
                         IncreasePoisonCounter();
                     yield return new WaitForSeconds(HoldValueChangeInterval);
-                }
+                } while (increaseRoutines[(int)CounterType.Poison] != null && countersDictionary[CounterType.Poison] < maxPoison);
                 break;
+            
             case CounterType.Loyalty:
-                while (increaseButtons[(int)CounterType.Loyalty].gameObject.activeInHierarchy)
+                do
                 {
                     if (decreaseRoutines[(int)CounterType.Loyalty] == null)
                         IncreaseLoyaltyCounter();
                     yield return new WaitForSeconds(HoldValueChangeInterval);
-                }
+                } while (increaseRoutines[(int)CounterType.Loyalty] != null && countersDictionary[CounterType.Loyalty] < MaxLoyalty);
                 break;
+            
             case CounterType.Energy:
-                while (increaseButtons[(int)CounterType.Energy].gameObject.activeInHierarchy)
+                do
                 {
                     if (decreaseRoutines[(int)CounterType.Energy] == null)
                         IncreaseEnergyCounter();
                     yield return new WaitForSeconds(HoldValueChangeInterval);
-                }
+                } while (increaseRoutines[(int)CounterType.Energy] != null && countersDictionary[CounterType.Energy] < MaxEnergy);
                 break;
         }
     }
@@ -81,28 +83,30 @@ public class ExtrasCounter : MonoBehaviour
         switch (counterType)
         {
             case CounterType.Poison:
-                while (decreaseButtons[(int)CounterType.Poison].gameObject.activeInHierarchy)
+                do
                 {
                     if (increaseRoutines[(int)CounterType.Poison] == null)
                         DecreasePoisonCounter();
                     yield return new WaitForSeconds(HoldValueChangeInterval);
-                }
+                } while (decreaseRoutines[(int)CounterType.Poison] != null && countersDictionary[CounterType.Poison] > MinPoison);
                 break;
+            
             case CounterType.Loyalty:
-                while (decreaseButtons[(int)CounterType.Loyalty].gameObject.activeInHierarchy)
+                do
                 {
                     if (increaseRoutines[(int)CounterType.Loyalty] == null)
                         DecreaseLoyaltyCounter();
                     yield return new WaitForSeconds(HoldValueChangeInterval);
-                }
+                } while (decreaseRoutines[(int)CounterType.Loyalty] != null && countersDictionary[CounterType.Loyalty] > MinLoyalty);
                 break;
+            
             case CounterType.Energy:
-                while (decreaseButtons[(int)CounterType.Energy].gameObject.activeInHierarchy)
+                do
                 {
                     if (increaseRoutines[(int)CounterType.Energy] == null)
                         DecreaseEnergyCounter();
                     yield return new WaitForSeconds(HoldValueChangeInterval);
-                }
+                } while (decreaseRoutines[(int)CounterType.Energy] != null && countersDictionary[CounterType.Energy] > MinEnergy);
                 break;
         }
     }
@@ -113,13 +117,6 @@ public class ExtrasCounter : MonoBehaviour
 		countersTexts[(int)CounterType.Poison].text = countersDictionary[CounterType.Poison].ToString();
         if (countersTexts[(int)CounterType.Poison].color != Color.red && countersDictionary[CounterType.Poison] >= criticalPoison)
             countersTexts[(int)CounterType.Poison].color = Color.red;
-		if (countersDictionary[CounterType.Poison] == maxPoison)
-        {
-			increaseButtons[(int)CounterType.Poison].gameObject.SetActive(false);
-            increaseRoutines[(int)CounterType.Poison] = null;
-        }
-		if (!decreaseButtons[(int)CounterType.Poison].isActiveAndEnabled)
-			decreaseButtons[(int)CounterType.Poison].gameObject.SetActive(true);
 	}
 
     void DecreasePoisonCounter()
@@ -128,13 +125,6 @@ public class ExtrasCounter : MonoBehaviour
         countersTexts[(int)CounterType.Poison].text = countersDictionary[CounterType.Poison].ToString();
         if (countersTexts[(int)CounterType.Poison].color != Color.white && countersDictionary[CounterType.Poison] < criticalPoison)
             countersTexts[(int)CounterType.Poison].color = Color.white;
-        if (countersDictionary[CounterType.Poison] == MinPoison)
-        {
-            decreaseButtons[(int)CounterType.Poison].gameObject.SetActive(false);
-            decreaseRoutines[(int)CounterType.Poison] = null;
-        }
-        if (!increaseButtons[(int)CounterType.Poison].isActiveAndEnabled)
-            increaseButtons[(int)CounterType.Poison].gameObject.SetActive(true);
     }
 
     void IncreaseLoyaltyCounter()
@@ -143,13 +133,6 @@ public class ExtrasCounter : MonoBehaviour
         countersTexts[(int)CounterType.Loyalty].text = countersDictionary[CounterType.Loyalty].ToString();
         if (countersTexts[(int)CounterType.Loyalty].color != Color.white && countersDictionary[CounterType.Loyalty] > CriticalLoyalty)
             countersTexts[(int)CounterType.Loyalty].color = Color.white;
-        if (countersDictionary[CounterType.Loyalty] == MaxLoyalty)
-        {
-            increaseButtons[(int)CounterType.Loyalty].gameObject.SetActive(false);
-            increaseRoutines[(int)CounterType.Loyalty] = null;
-        }
-        if (!decreaseButtons[(int)CounterType.Loyalty].isActiveAndEnabled)
-            decreaseButtons[(int)CounterType.Loyalty].gameObject.SetActive(true);
     }
 
     void DecreaseLoyaltyCounter()
@@ -158,39 +141,18 @@ public class ExtrasCounter : MonoBehaviour
         countersTexts[(int)CounterType.Loyalty].text = countersDictionary[CounterType.Loyalty].ToString();
         if (countersTexts[(int)CounterType.Loyalty].color != Color.red && countersDictionary[CounterType.Loyalty] <= CriticalLoyalty)
             countersTexts[(int)CounterType.Loyalty].color = Color.red;
-        if (countersDictionary[CounterType.Loyalty] == MinLoyalty)
-        {
-            decreaseButtons[(int)CounterType.Loyalty].gameObject.SetActive(false);
-            decreaseRoutines[(int)CounterType.Loyalty] = null;
-        }
-        if (!increaseButtons[(int)CounterType.Loyalty].isActiveAndEnabled)
-            increaseButtons[(int)CounterType.Loyalty].gameObject.SetActive(true);
     }
 
     void IncreaseEnergyCounter()
     {
         countersDictionary[CounterType.Energy]++;
         countersTexts[(int)CounterType.Energy].text = countersDictionary[CounterType.Energy].ToString();
-        if (countersDictionary[CounterType.Energy] == MaxEnergy)
-        {
-            increaseButtons[(int)CounterType.Energy].gameObject.SetActive(false);
-            increaseRoutines[(int)CounterType.Energy] = null;
-        }
-        if (!decreaseButtons[(int)CounterType.Energy].isActiveAndEnabled)
-            decreaseButtons[(int)CounterType.Energy].gameObject.SetActive(true);
     }
 
     void DecreaseEnergyCounter()
     {
         countersDictionary[CounterType.Energy]--;
         countersTexts[(int)CounterType.Energy].text = countersDictionary[CounterType.Energy].ToString();
-        if (countersDictionary[CounterType.Energy] == MinEnergy)
-        {
-            decreaseButtons[(int)CounterType.Energy].gameObject.SetActive(false);
-            decreaseRoutines[(int)CounterType.Energy] = null;
-        }
-        if (!increaseButtons[(int)CounterType.Energy].isActiveAndEnabled)
-            increaseButtons[(int)CounterType.Energy].gameObject.SetActive(true);
     }
 
 	public void ResetAllCounters()
@@ -229,6 +191,29 @@ public class ExtrasCounter : MonoBehaviour
             StopCoroutine(increaseRoutines[counterTypeIndex]);
             increaseRoutines[counterTypeIndex] = null;
         }
+
+        int maxCounter = 0;
+
+        switch ((CounterType)counterTypeIndex)
+        {
+            case CounterType.Poison:
+                maxCounter = maxPoison;
+                break;
+            case CounterType.Loyalty:
+                maxCounter = MaxLoyalty;
+                break;
+            case CounterType.Energy:
+                maxCounter = MaxEnergy;
+                break;
+            default:
+                maxCounter = 999;
+                break;
+        }
+
+        if (countersDictionary[(CounterType)counterTypeIndex] == maxCounter)
+            increaseButtons[counterTypeIndex].gameObject.SetActive(false);
+        if (!decreaseButtons[counterTypeIndex].isActiveAndEnabled)
+            decreaseButtons[counterTypeIndex].gameObject.SetActive(true);
     }
 
     public void DecreaseCounterOnHold(int counterTypeIndex)
@@ -253,6 +238,29 @@ public class ExtrasCounter : MonoBehaviour
             StopCoroutine(decreaseRoutines[counterTypeIndex]);
             decreaseRoutines[counterTypeIndex] = null;
         }
+
+        int minCounter = 0;
+
+        switch ((CounterType)counterTypeIndex)
+        {
+            case CounterType.Poison:
+                minCounter = MinPoison;
+                break;
+            case CounterType.Loyalty:
+                minCounter = MinLoyalty;
+                break;
+            case CounterType.Energy:
+                minCounter = MinEnergy;
+                break;
+            default:
+                minCounter = 0;
+                break;
+        }
+
+        if (countersDictionary[(CounterType)counterTypeIndex] == minCounter)
+            decreaseButtons[counterTypeIndex].gameObject.SetActive(false);
+        if (!increaseButtons[counterTypeIndex].isActiveAndEnabled)
+            increaseButtons[counterTypeIndex].gameObject.SetActive(true);
     }
 
     public void SetMaxPoison(int players, int startingLife)

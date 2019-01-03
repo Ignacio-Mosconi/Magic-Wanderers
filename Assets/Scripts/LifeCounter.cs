@@ -22,22 +22,22 @@ public class LifeCounter : MonoBehaviour
 
     IEnumerator IncreaseLifeGradually()
     {
-        while (increaseButton.gameObject.activeInHierarchy)
+        do
         {
             if (decreaseLifeRoutine == null)
                 IncreaseLife();
             yield return new WaitForSeconds(HoldValueChangeInterval);
-        }
+        } while (increaseLifeRoutine != null && life < MaxLife);
     }
 
     IEnumerator DecreaseLifeGradually()
     {
-        while (decreaseButton.gameObject.activeInHierarchy)
+        do
         {
             if (increaseLifeRoutine == null)
                 DecreaseLife();
             yield return new WaitForSeconds(HoldValueChangeInterval);
-        }
+        } while (decreaseLifeRoutine != null && life > MinLife);
     }
 
     void IncreaseLife()
@@ -52,13 +52,6 @@ public class LifeCounter : MonoBehaviour
                 if (lifeText.color != Color.yellow && life <= WarningLife)
                     lifeText.color = Color.yellow;
         }
-        if (life == MaxLife)
-        {
-            increaseButton.gameObject.SetActive(false);
-            increaseLifeRoutine = null;
-        }
-        if (!decreaseButton.isActiveAndEnabled)
-            decreaseButton.gameObject.SetActive(true);
     }
 
     void DecreaseLife()
@@ -73,13 +66,6 @@ public class LifeCounter : MonoBehaviour
                 if (lifeText.color != Color.yellow && life > CriticalLife)
                     lifeText.color = Color.yellow;
         }
-        if (life == MinLife)
-        {
-            decreaseButton.gameObject.SetActive(false);
-            decreaseLifeRoutine = null;
-        }
-        if (!increaseButton.isActiveAndEnabled)
-            increaseButton.gameObject.SetActive(true);
     }
 
     public void ResetLife()
@@ -106,6 +92,11 @@ public class LifeCounter : MonoBehaviour
             StopCoroutine(increaseLifeRoutine);
             increaseLifeRoutine = null;
         }
+
+        if (life == MaxLife)
+            increaseButton.gameObject.SetActive(false);
+        if (!decreaseButton.isActiveAndEnabled)
+            decreaseButton.gameObject.SetActive(true);
     }
 
     public void DecreaseLifeOnRelease()
@@ -115,6 +106,11 @@ public class LifeCounter : MonoBehaviour
             StopCoroutine(decreaseLifeRoutine);
             decreaseLifeRoutine = null;
         }
+
+        if (life == MinLife)
+            decreaseButton.gameObject.SetActive(false);
+        if (!increaseButton.isActiveAndEnabled)
+            increaseButton.gameObject.SetActive(true);
     }
 
     public int Life
