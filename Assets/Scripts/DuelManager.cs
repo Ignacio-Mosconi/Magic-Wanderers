@@ -25,6 +25,8 @@ public class DuelManager : MonoBehaviour
     #endregion
 
     DuelBoard duelBoard;
+    int currentNumberOfPlayers;
+    int currentStartingLife;
 
     void Awake()
     {
@@ -39,7 +41,20 @@ public class DuelManager : MonoBehaviour
 
     public void EnableDuelBoard(int numberOfPlayers, int startingLife)
     {
+        currentNumberOfPlayers = numberOfPlayers;
+        currentStartingLife = startingLife;
+        
         duelBoard.gameObject.SetActive(true);
-        duelBoard.SetUpBoard(numberOfPlayers, startingLife);
+        duelBoard.SetUpBoard(currentNumberOfPlayers, currentStartingLife);
+    }
+
+    public int CurrentNumberOfPlayers
+    {
+        get { return currentNumberOfPlayers; }
+    }
+
+    public int CurrentStartingLife
+    {
+        get { return currentStartingLife; }
     }
 }

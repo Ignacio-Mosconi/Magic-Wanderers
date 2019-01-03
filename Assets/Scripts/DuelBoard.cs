@@ -88,7 +88,7 @@ public class DuelBoard : MonoBehaviour
 	{
         int highestRoll = 0;
         int highestRollIndex = 0;
-        int[] results = new int[AppManager.Instance.NumberOfPlayers];
+        int[] results = new int[DuelManager.Instance.CurrentNumberOfPlayers];
         int i = 0;
 
         AudioManager.Instance.PlaySound("Dice Roll");

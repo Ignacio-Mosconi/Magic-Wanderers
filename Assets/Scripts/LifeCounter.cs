@@ -13,12 +13,11 @@ public class LifeCounter : MonoBehaviour
     const int MinLife = 0;
     const int WarningLife = 10;
     const int CriticalLife = 5;
-    const int DefaultLife = 20;
     const float HoldValueChangeInterval = 0.15f;
 
     Coroutine increaseLifeRoutine;
     Coroutine decreaseLifeRoutine;
-	int life = DefaultLife;
+	int life;
 
     IEnumerator IncreaseLifeGradually()
     {
@@ -70,7 +69,7 @@ public class LifeCounter : MonoBehaviour
 
     public void ResetLife()
     {
-        life = DefaultLife;
+        life = DuelManager.Instance.CurrentStartingLife;
         lifeText.text = life.ToString();
         lifeText.color = Color.white;
     }
