@@ -91,6 +91,8 @@ public class MainMenu : MonoBehaviour
         currentScreen = Array.Find(menuScreens, menuScreen => menuScreen.screen == nextScreen);
 
         nextScreen.SetActive(true);
+
+        Debug.Log(currentScreen.screen.name);
         
         currentScreenAnimators = currentScreen.screen.GetComponentsInChildren<Animator>();
 
