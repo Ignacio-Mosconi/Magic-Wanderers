@@ -11,7 +11,7 @@ public class DuelMenuScreen : MonoBehaviour
     int numberOfPlayers;
     int startingLife;
 
-    void Awake()
+    void OnEnable()
     {
         numberOfPlayers = AppManager.Instance.NumberOfPlayers;
         startingLife = AppManager.Instance.StartingLife;

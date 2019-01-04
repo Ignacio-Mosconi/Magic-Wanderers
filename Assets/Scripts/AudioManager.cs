@@ -2,6 +2,12 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
+public enum MixerType
+{
+    Sfx,
+    Music
+}
+
 public class AudioManager : MonoBehaviour
 {
     #region Singleton
@@ -26,7 +32,11 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
+    [SerializeField] AudioMixer[] audioMixers;
     [SerializeField] Sound[] soundsUI;
+
+    const float MixerMultiplier = 20f;
+    const float MuteValue = -80f;
 
     void Awake()
     {
@@ -40,6 +50,7 @@ public class AudioManager : MonoBehaviour
         {
             sound.audioSource = gameObject.AddComponent<AudioSource>();
             sound.audioSource.clip = sound.audioClip;
+            sound.audioSource.outputAudioMixerGroup = sound.audioMixerGroup;
             sound.audioSource.volume = sound.volume;
             sound.audioSource.pitch = sound.pitch;
             sound.audioSource.loop = sound.loop;
@@ -53,5 +64,44 @@ public class AudioManager : MonoBehaviour
             sound.audioSource.Play();
         else
             Debug.Log("Warning: the '" + soundName + "' could not be found.");
+    }
+
+    public void SetMixerVolume(MixerType mixerType, float volume)
+    {
+        audioMixers[(int)mixerType].SetFloat("Volume", Mathf.Log(volume) * MixerMultiplier);
+    }
+
+    public void MuteMixer(MixerType mixerType)
+    {
+        audioMixers[(int)mixerType].SetFloat("Volume", MuteValue);
+    }
+
+    public void UnmuteMixer(MixerType mixerType)
+    {
+        float originalVolume = 0f;
+
+        switch (mixerType)
+        {
+            case MixerType.Sfx:
+                originalVolume = AppManager.Instance.SfxVolume;
+                break;
+            case MixerType.Music:
+                originalVolume = AppManager.Instance.MusicVolume;
+                break;
+            default:
+                originalVolume = MuteValue;
+                break;
+        }
+
+        audioMixers[(int)mixerType].SetFloat("Volume", originalVolume);
+    }
+
+    public bool IsMixerMuted(MixerType mixerType)
+    {
+        float mixerVolume;
+        
+        audioMixers[(int)mixerType].GetFloat("Volume", out mixerVolume);
+
+        return (mixerVolume == MuteValue);
     }
 }

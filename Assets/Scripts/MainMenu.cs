@@ -152,8 +152,8 @@ public class MainMenu : MonoBehaviour
         currentScreen.screen.SetActive(true);
     }
 
-    public void PlayMenuSound(string name)
+    public void PlayMenuSound(string soundName)
     {
-        AudioManager.Instance.PlaySound(name);
+        AudioManager.Instance.PlaySound(soundName);
     }
 }
