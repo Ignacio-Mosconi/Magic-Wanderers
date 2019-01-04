@@ -151,4 +151,9 @@ public class MainMenu : MonoBehaviour
     {
         currentScreen.screen.SetActive(true);
     }
+
+    public void PlayMenuSound(string name)
+    {
+        AudioManager.Instance.PlaySound(name);
+    }
 }

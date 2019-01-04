@@ -74,3 +74,15 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     audioSource: {fileID: 0}
+  - audioClip: {fileID: 8300000, guid: 06dbbb97b52aea04d8e211211e336f20, type: 3}
+    name: Menu Select
+    volume: 1
+    pitch: 1
+    loop: 0
+    audioSource: {fileID: 0}
+  - audioClip: {fileID: 8300000, guid: 67ac64739d7f5b14aba5ec55cc092359, type: 3}
+    name: Menu Return
+    volume: 1
+    pitch: 1
+    loop: 0
+    audioSource: {fileID: 0}
