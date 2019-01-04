@@ -145,6 +145,8 @@ public class DuelBoard : MonoBehaviour
         foreach (GameObject layout in layouts)
             layout.SetActive(false);
 
+        duelMenuMainButton.gameObject.SetActive(true);
+
         switch (players)
         {
             case 2:
@@ -228,5 +230,14 @@ public class DuelBoard : MonoBehaviour
 	{
 		SetUpDice();
 		StartCoroutine(PerformDiceRoll(playersUIHandlers[0].GetDiceRollAnimationDuration()));
+	}
+
+	public void LeaveDuel()
+	{
+		ToggleMenu();
+		duelMenuMainButton.gameObject.SetActive(false);
+		
+		MainMenu.Instance.EnableMainMenu();
+		DuelManager.Instance.DisableDuelBoard();
 	}
 }

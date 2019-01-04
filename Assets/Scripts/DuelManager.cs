@@ -48,6 +48,14 @@ public class DuelManager : MonoBehaviour
         duelBoard.SetUpBoard(currentNumberOfPlayers, currentStartingLife);
     }
 
+    public void DisableDuelBoard()
+    {
+        currentNumberOfPlayers = 0;
+        currentStartingLife = 0;
+
+        duelBoard.gameObject.SetActive(false);
+    }
+
     public int CurrentNumberOfPlayers
     {
         get { return currentNumberOfPlayers; }

@@ -11,6 +11,28 @@ public struct MenuScreen
 
 public class MainMenu : MonoBehaviour
 {
+    #region Singleton
+    static MainMenu instance;
+
+    public static MainMenu Instance
+    {
+        get
+        {
+            if (!instance)
+            {
+                instance = FindObjectOfType<MainMenu>();
+                if (!instance)
+                {
+                    GameObject gameObj = new GameObject("Main Menu");
+                    instance = gameObj.AddComponent<MainMenu>();
+                }
+            }
+
+            return instance;
+        }
+    }
+    #endregion
+    
     [SerializeField] MenuScreen[] menuScreens;
     [SerializeField] GameObject mainScreen;
     [SerializeField] Button returnButton;
@@ -21,6 +43,12 @@ public class MainMenu : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != this)
+        {
+            Debug.LogError("Warning: more than one Main Menu in the scene.", gameObject);
+            return;
+        }
+
         currentScreen = Array.Find(menuScreens, menuScreen => menuScreen.screen == mainScreen);
 
         if (currentScreen.screen != mainScreen)
@@ -52,6 +80,11 @@ public class MainMenu : MonoBehaviour
 
         returnButton.gameObject.SetActive(true);
         returnButton.interactable = true;
+    }
+
+    void DisableCurrentScreen()
+    {
+        currentScreen.screen.SetActive(false);
     }
 
     public void ReturnToPreviousScreen()
@@ -95,5 +128,27 @@ public class MainMenu : MonoBehaviour
         currentScreenAnimators = currentScreen.screen.GetComponentsInChildren<Animator>();
 
         Invoke("DisablePreviousScreen", transitionTime);
+    }
+
+    public void DisableMainMenu()
+    {
+        float transitionTime = 0f;
+
+        foreach (Animator animator in currentScreenAnimators)
+        {
+            animator.SetTrigger("Hide");
+
+            float animationDuration = animator.GetCurrentAnimatorStateInfo(0).length;
+
+            if (animationDuration > transitionTime)
+                transitionTime = animationDuration;
+        }
+        
+        Invoke("DisableCurrentScreen", transitionTime);
+    }
+
+    public void EnableMainMenu()
+    {
+        currentScreen.screen.SetActive(true);
     }
 }

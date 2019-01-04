@@ -32,7 +32,7 @@ public class DuelMenuScreen : MonoBehaviour
 
     public void StartDuel()
     {
-        transform.parent.gameObject.SetActive(false);
+        MainMenu.Instance.DisableMainMenu();
         DuelManager.Instance.EnableDuelBoard(numberOfPlayers, startingLife);
     }
 }
