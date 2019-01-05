@@ -40,6 +40,7 @@ public class MainMenu : MonoBehaviour
     MenuScreen currentScreen;
     MenuScreen previousScreen;
     Animator[] currentScreenAnimators;
+    Animator returnButtonAnimator;
 
     void Awake()
     {
@@ -58,6 +59,7 @@ public class MainMenu : MonoBehaviour
         }
 
         currentScreenAnimators = currentScreen.screen.GetComponentsInChildren<Animator>();
+        returnButtonAnimator = returnButton.GetComponent<Animator>();
     }
 
     void EnablePreviousScreen()
@@ -69,7 +71,11 @@ public class MainMenu : MonoBehaviour
         currentScreenAnimators = currentScreen.screen.GetComponentsInChildren<Animator>();
 
         if (currentScreen.index > 0)
+        {
             previousScreen = Array.Find(menuScreens, menuScreen => menuScreen.index == currentScreen.index - 1);
+            returnButtonAnimator.SetTrigger("Show");
+            returnButton.interactable = true;
+        }
         else
             returnButton.gameObject.SetActive(false);
     }
@@ -77,7 +83,6 @@ public class MainMenu : MonoBehaviour
     void DisablePreviousScreen()
     {
         previousScreen.screen.SetActive(false);
-
         returnButton.gameObject.SetActive(true);
         returnButton.interactable = true;
     }
@@ -85,13 +90,17 @@ public class MainMenu : MonoBehaviour
     void DisableCurrentScreen()
     {
         currentScreen.screen.SetActive(false);
+        returnButton.gameObject.SetActive(false);
+        returnButton.interactable = false;
     }
 
     public void ReturnToPreviousScreen()
     {
         float transitionTime = 0f;
 
+        returnButtonAnimator.SetTrigger("Hide");
         returnButton.interactable = false;
+        transitionTime = returnButtonAnimator.GetCurrentAnimatorStateInfo(0).length;
 
         foreach (Animator animator in currentScreenAnimators)
         {
@@ -134,6 +143,9 @@ public class MainMenu : MonoBehaviour
     {
         float transitionTime = 0f;
 
+        returnButtonAnimator.SetTrigger("Hide");
+        transitionTime = returnButtonAnimator.GetCurrentAnimatorStateInfo(0).length;
+
         foreach (Animator animator in currentScreenAnimators)
         {
             animator.SetTrigger("Hide");
@@ -150,6 +162,11 @@ public class MainMenu : MonoBehaviour
     public void EnableMainMenu()
     {
         currentScreen.screen.SetActive(true);
+        if (currentScreen.index != 0)
+        {
+            returnButton.gameObject.SetActive(true);
+            returnButton.interactable = true;
+        }
     }
 
     public void PlayMenuSound(string soundName)

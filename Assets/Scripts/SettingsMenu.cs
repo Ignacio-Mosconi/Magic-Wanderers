@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
+    [SerializeField] ScrollRect scrollRect;
     [SerializeField] Slider sfxVolumeSlider;
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Button[] muteButtons;
@@ -12,6 +13,8 @@ public class SettingsMenu : MonoBehaviour
     {
         sfxVolumeSlider.value = AppManager.Instance.SfxVolume;
         musicVolumeSlider.value = AppManager.Instance.MusicVolume;
+
+        scrollRect.verticalNormalizedPosition = 1f;
     }
 
     public void SetSfxVolume(float volume)
