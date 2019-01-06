@@ -13,8 +13,8 @@ public class DuelMenuScreen : MonoBehaviour
 
     void OnEnable()
     {
-        numberOfPlayers = AppManager.Instance.NumberOfPlayers;
-        startingLife = AppManager.Instance.StartingLife;
+        numberOfPlayers = AppManager.Instance.DefaultNumberOfPlayers;
+        startingLife = AppManager.Instance.DefaultStartingLife;
 
         playersSlider.value = numberOfPlayers;
         startingLifeSlider.value = startingLife / StartingLifeMultiplier;

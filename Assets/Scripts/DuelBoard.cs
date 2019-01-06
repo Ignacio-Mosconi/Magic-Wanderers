@@ -47,16 +47,6 @@ public class DuelBoard : MonoBehaviour
 		}
 	}
 
-	void Start()
-	{
-		int i = 0;
-		foreach (BackgroundChanger bgChanger in playersBackgroundChangers)
-		{
-        	bgChanger.ChangeBackgroundColor((int)AppManager.Instance.DefaultSymbols[i]);
-			i++;
-		}
-    }
-
     void SetUpDice()
     {
 		foreach (UIHandler uiHandler in playersUIHandlers)
@@ -185,6 +175,14 @@ public class DuelBoard : MonoBehaviour
 			lifeCounter.Life = startingLife;
 		foreach (ExtrasCounter extrasCounter in playersExtrasCounters)
 			extrasCounter.SetMaxPoison(players, startingLife);
+        
+		int i = 0;
+        
+		foreach (BackgroundChanger bgChanger in playersBackgroundChangers)
+        {
+            bgChanger.ChangeBackgroundColor((int)AppManager.Instance.GetPlayerSymbol(i));
+            i++;
+        }
     }
 
 	public void ToggleMenu()

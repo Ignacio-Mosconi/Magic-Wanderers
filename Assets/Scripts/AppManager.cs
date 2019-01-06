@@ -1,5 +1,11 @@
 ﻿using UnityEngine;
 
+public struct PlayerProfile
+{
+    public string name;
+    public Symbol symbol;
+}
+
 public class AppManager : MonoBehaviour
 {
     #region Singleton
@@ -27,9 +33,9 @@ public class AppManager : MonoBehaviour
     const int MaxPlayers = 4;
     const int MinPlayers = 2;
 
-    int numberOfPlayers;
-    Symbol[] defaultSymbols;
-    int startingLife;
+    PlayerProfile[] playerProfiles;
+    int defaultNumberOfPlayers;
+    int defaultStartingLife;
     float sfxVolume;
     float musicVolume;
 
@@ -46,50 +52,70 @@ public class AppManager : MonoBehaviour
 
     void LoadPreferences()
     {
-        defaultSymbols = new Symbol[MaxPlayers];
+        playerProfiles = new PlayerProfile[MaxPlayers];
 
-        numberOfPlayers = PlayerPrefs.GetInt("NumberOfPlayers", MinPlayers);
+        defaultNumberOfPlayers = PlayerPrefs.GetInt("DefaultNumberOfPlayers", MinPlayers);
+        defaultStartingLife = PlayerPrefs.GetInt("DefaultStartingLife", 20);
         for (int i = 0; i < MaxPlayers; i++)
-            defaultSymbols[i] = (Symbol)PlayerPrefs.GetInt("Player" + (i + 1) + "Symbol", Random.Range(0, (int)Symbol.Count));
-        startingLife = PlayerPrefs.GetInt("StartingLife", 20);
+        {
+            playerProfiles[i].name = PlayerPrefs.GetString("Player" + (i + 1) + "Name", "");
+            playerProfiles[i].symbol = (Symbol)PlayerPrefs.GetInt("Player" + (i + 1) + "Symbol", Random.Range(0, (int)Symbol.Count));
+        }
         sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
     }
 
     #region Getters & Setters
-    public void SetDefaultSymbol(Symbol symbol, int playerIndex)
+
+    public string GetPlayerName(int playerIndex)
     {
-        if (playerIndex >= 0 && playerIndex < defaultSymbols.GetLength(0))
+        return playerProfiles[playerIndex].name;
+    }
+
+    public Symbol GetPlayerSymbol(int playerIndex)
+    {
+        return playerProfiles[playerIndex].symbol;
+    }
+
+    public void SetPlayerName(string name, int playerIndex)
+    {
+        if (playerIndex >= 0 && playerIndex < playerProfiles.GetLength(0))
         {
-            defaultSymbols[playerIndex] = symbol;
-            PlayerPrefs.SetInt("Player" + (playerIndex + 1) + "Symbol", (int)defaultSymbols[playerIndex]);
+            playerProfiles[playerIndex].name = name;
+            PlayerPrefs.SetString("Player" + (playerIndex + 1) + "Name", playerProfiles[playerIndex].name);
         }
         else
             Debug.LogError("Warning: attempted to access to a player index out of range.");
     }
 
-    public Symbol[] DefaultSymbols
+    public void SetPlayerSymbol(Symbol symbol, int playerIndex)
     {
-        get { return defaultSymbols; }
+        if (playerIndex >= 0 && playerIndex < playerProfiles.GetLength(0))
+        {
+            playerProfiles[playerIndex].symbol = symbol;
+            PlayerPrefs.SetInt("Player" + (playerIndex + 1) + "Symbol", (int)playerProfiles[playerIndex].symbol);
+        }
+        else
+            Debug.LogError("Warning: attempted to access to a player index out of range.");
     }
 
-    public int NumberOfPlayers
+    public int DefaultNumberOfPlayers
     {
-        get { return numberOfPlayers; }
+        get { return defaultNumberOfPlayers; }
         set
         {
-            numberOfPlayers = value;
-            PlayerPrefs.SetInt("NumberOfPlayers", numberOfPlayers);
+            defaultNumberOfPlayers = value;
+            PlayerPrefs.SetInt("DefaultNumberOfPlayers", defaultNumberOfPlayers);
         }
     }
 
-    public int StartingLife
+    public int DefaultStartingLife
     {
-        get { return startingLife; }
+        get { return defaultStartingLife; }
         set
         {
-            startingLife = value;
-            PlayerPrefs.SetInt("StartingLife", startingLife);
+            defaultStartingLife = value;
+            PlayerPrefs.SetInt("DefaultStartingLife", defaultStartingLife);
         }
     }
 

@@ -9,11 +9,20 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Button[] muteButtons;
     [SerializeField] Sprite[] soundIcons;
+    [SerializeField] TMP_Dropdown[] symbolDropdowns;
 
     void OnEnable()
     {
         sfxVolumeSlider.value = AppManager.Instance.SfxVolume;
         musicVolumeSlider.value = AppManager.Instance.MusicVolume;
+
+        int i = 0;
+
+        foreach (TMP_Dropdown symbolDropdown in symbolDropdowns)
+        {
+            symbolDropdown.value = (int)AppManager.Instance.GetPlayerSymbol(i);
+            i++;
+        }
 
         scrollRect.verticalNormalizedPosition = 1f;
     }
@@ -68,5 +77,12 @@ public class SettingsMenu : MonoBehaviour
             AudioManager.Instance.UnmuteMixer(MixerType.Music);
             muteButtons[(int)MixerType.Music].image.sprite = soundIcons[0];
         }
+    }
+
+    public void ChangePlayerSymbol(int playerIndex)
+    {
+        Symbol symbol = (Symbol)symbolDropdowns[playerIndex].value;
+        
+        AppManager.Instance.SetPlayerSymbol(symbol, playerIndex);
     }
 }
