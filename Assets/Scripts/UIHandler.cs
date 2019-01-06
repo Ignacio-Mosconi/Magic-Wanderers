@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIHandler : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class UIHandler : MonoBehaviour
 	[SerializeField] GameObject diePanel;
 	[SerializeField] GameObject closeButton;
 	[SerializeField] GameObject mainButtons;
+	[SerializeField] TextMeshProUGUI playerNameText;
 	[SerializeField] Button[] lifeChangeButtons;
 	[SerializeField] Animator lifeTextAnimator;
 	[SerializeField] Animator symbolSelectorAnimator;
@@ -68,6 +70,11 @@ public class UIHandler : MonoBehaviour
 	public void ShowLife()
 	{
 		life.SetActive(true);
+	}
+
+	public void ChangePlayerName(string name)
+	{
+		playerNameText.text = name;
 	}
 
 	public void PlayResetLifeCounterAnimation()

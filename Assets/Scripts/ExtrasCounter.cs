@@ -45,6 +45,11 @@ public class ExtrasCounter : MonoBehaviour
 			countersDictionary.Add((CounterType)i, 0);
 	}
 
+    void OnEnable()
+    {
+        ResetAllCounters();
+    }
+
     IEnumerator IncreaseCounterGradually(CounterType counterType)
     {
         switch (counterType)

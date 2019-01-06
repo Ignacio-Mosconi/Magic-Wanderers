@@ -178,7 +178,15 @@ public class DuelBoard : MonoBehaviour
         
 		int i = 0;
         
-		foreach (BackgroundChanger bgChanger in playersBackgroundChangers)
+		foreach (UIHandler handler in playersUIHandlers)
+        {
+            handler.ChangePlayerName(AppManager.Instance.GetPlayerName(i));
+            i++;
+        }
+
+        i = 0;
+
+        foreach (BackgroundChanger bgChanger in playersBackgroundChangers)
         {
             bgChanger.ChangeBackgroundColor((int)AppManager.Instance.GetPlayerSymbol(i));
             i++;

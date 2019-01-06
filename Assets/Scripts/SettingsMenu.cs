@@ -9,6 +9,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Button[] muteButtons;
     [SerializeField] Sprite[] soundIcons;
+    [SerializeField] TMP_InputField[] nameInputFields;
     [SerializeField] TMP_Dropdown[] symbolDropdowns;
 
     void OnEnable()
@@ -17,6 +18,14 @@ public class SettingsMenu : MonoBehaviour
         musicVolumeSlider.value = AppManager.Instance.MusicVolume;
 
         int i = 0;
+
+        foreach (TMP_InputField nameInputField in nameInputFields)
+        {
+            nameInputField.text = AppManager.Instance.GetPlayerName(i);
+            i++;
+        }
+
+        i = 0;
 
         foreach (TMP_Dropdown symbolDropdown in symbolDropdowns)
         {
@@ -77,6 +86,13 @@ public class SettingsMenu : MonoBehaviour
             AudioManager.Instance.UnmuteMixer(MixerType.Music);
             muteButtons[(int)MixerType.Music].image.sprite = soundIcons[0];
         }
+    }
+
+    public void ChangePlayerName(int playerIndex)
+    {
+        string name = nameInputFields[playerIndex].text;
+        
+        AppManager.Instance.SetPlayerName(name, playerIndex);
     }
 
     public void ChangePlayerSymbol(int playerIndex)

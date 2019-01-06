@@ -19,6 +19,11 @@ public class LifeCounter : MonoBehaviour
     Coroutine decreaseLifeRoutine;
 	int life;
 
+    void OnEnable()
+    {
+        ResetLife();
+    }
+
     IEnumerator IncreaseLifeGradually()
     {
         do
