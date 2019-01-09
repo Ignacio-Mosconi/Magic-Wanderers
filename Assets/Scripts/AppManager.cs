@@ -31,7 +31,7 @@ public class AppManager : MonoBehaviour
     }
     #endregion
 
-    const int MaxPlayers = 4;
+    const int MaxPlayers = 10;
     const int MinPlayers = 2;
 
     PlayerProfile[] playerProfiles;
@@ -59,7 +59,7 @@ public class AppManager : MonoBehaviour
         defaultStartingLife = PlayerPrefs.GetInt("DefaultStartingLife", 20);
         for (int i = 0; i < MaxPlayers; i++)
         {
-            playerProfiles[i].name = PlayerPrefs.GetString("Player" + (i + 1) + "Name", "");
+            playerProfiles[i].name = PlayerPrefs.GetString("Player" + (i + 1) + "Name", "Planeswalker #" + (i + 1));
             playerProfiles[i].symbol = (Symbol)PlayerPrefs.GetInt("Player" + (i + 1) + "Symbol", UnityEngine.Random.Range(0, (int)Symbol.Count));
         }
         sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
