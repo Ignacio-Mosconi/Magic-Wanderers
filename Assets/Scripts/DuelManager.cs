@@ -39,13 +39,13 @@ public class DuelManager : MonoBehaviour
         duelBoard = GetComponentInChildren<DuelBoard>(true);
     }
 
-    public void EnableDuelBoard(int numberOfPlayers, int startingLife)
+    public void EnableDuelBoard(int numberOfPlayers, int startingLife, string[] playerNames)
     {
         currentNumberOfPlayers = numberOfPlayers;
         currentStartingLife = startingLife;
         
         duelBoard.gameObject.SetActive(true);
-        duelBoard.SetUpBoard(currentNumberOfPlayers, currentStartingLife);
+        duelBoard.SetUpBoard(currentNumberOfPlayers, currentStartingLife, playerNames);
     }
 
     public void DisableDuelBoard()

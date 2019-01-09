@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public struct PlayerProfile
 {
@@ -59,7 +60,7 @@ public class AppManager : MonoBehaviour
         for (int i = 0; i < MaxPlayers; i++)
         {
             playerProfiles[i].name = PlayerPrefs.GetString("Player" + (i + 1) + "Name", "");
-            playerProfiles[i].symbol = (Symbol)PlayerPrefs.GetInt("Player" + (i + 1) + "Symbol", Random.Range(0, (int)Symbol.Count));
+            playerProfiles[i].symbol = (Symbol)PlayerPrefs.GetInt("Player" + (i + 1) + "Symbol", UnityEngine.Random.Range(0, (int)Symbol.Count));
         }
         sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
@@ -75,6 +76,16 @@ public class AppManager : MonoBehaviour
     public Symbol GetPlayerSymbol(int playerIndex)
     {
         return playerProfiles[playerIndex].symbol;
+    }
+
+    public Symbol GetPlayerSymbol(string playerName)
+    {
+        PlayerProfile playerProfile = Array.Find(playerProfiles, profile => profile.name == playerName);
+
+        if (playerProfile.name == "")
+            Debug.LogError("Warning: there are no players that have the name given.", gameObject);
+
+        return playerProfile.symbol;
     }
 
     public void SetPlayerName(string name, int playerIndex)

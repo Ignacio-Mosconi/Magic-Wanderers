@@ -127,7 +127,7 @@ public class DuelBoard : MonoBehaviour
 		}
 	}
 
-    public void SetUpBoard(int players, int startingLife)
+    public void SetUpBoard(int players, int startingLife, string[] playerNames)
     {
         RectTransform menuTransform = duelMenu.GetComponent<RectTransform>();
         RectTransform menuButtonTransform = duelMenuMainButton.GetComponent<RectTransform>();
@@ -180,7 +180,7 @@ public class DuelBoard : MonoBehaviour
         
 		foreach (UIHandler handler in playersUIHandlers)
         {
-            handler.ChangePlayerName(AppManager.Instance.GetPlayerName(i));
+            handler.ChangePlayerName(playerNames[i]);
             i++;
         }
 
@@ -188,7 +188,7 @@ public class DuelBoard : MonoBehaviour
 
         foreach (BackgroundChanger bgChanger in playersBackgroundChangers)
         {
-            bgChanger.ChangeBackgroundColor((int)AppManager.Instance.GetPlayerSymbol(i));
+            bgChanger.ChangeBackgroundColor((int)AppManager.Instance.GetPlayerSymbol(playerNames[i]));
             i++;
         }
     }
