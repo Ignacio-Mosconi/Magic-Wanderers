@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioMixer[] audioMixers;
     [SerializeField] Sound[] soundsUI;
 
-    const float MixerMultiplier = 20f;
+    const float MixerMultiplier = 12f;
     const float MuteValue = -80f;
 
     void Awake()

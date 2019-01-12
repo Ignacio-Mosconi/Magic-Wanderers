@@ -204,7 +204,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1900}
+  m_SizeDelta: {x: 0, y: 2000}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1008402046337747925
 GameObject:
@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Elasticity: 0.2
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 2
+  m_ScrollSensitivity: 100
   m_Viewport: {fileID: 4184502553113660168}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -2326,7 +2326,7 @@ PrefabInstance:
     - target: {fileID: 2051976105588036070, guid: eb69fc1539f62324684a94884d881a3d,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2051976105588036070, guid: eb69fc1539f62324684a94884d881a3d,
         type: 3}
@@ -2584,7 +2584,7 @@ PrefabInstance:
     - target: {fileID: 2051976105588036070, guid: eb69fc1539f62324684a94884d881a3d,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2051976105588036070, guid: eb69fc1539f62324684a94884d881a3d,
         type: 3}
@@ -3179,7 +3179,7 @@ PrefabInstance:
     - target: {fileID: 2051976105588036070, guid: eb69fc1539f62324684a94884d881a3d,
         type: 3}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2051976105588036070, guid: eb69fc1539f62324684a94884d881a3d,
         type: 3}
