@@ -7,6 +7,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] ScrollRect scrollRect;
     [SerializeField] Slider sfxVolumeSlider;
     [SerializeField] Slider musicVolumeSlider;
+    [SerializeField] Slider defaultStartingLifeSlider;
+    [SerializeField] Slider defaultNumberOfPlayersSlider;
     [SerializeField] Button[] muteButtons;
     [SerializeField] Sprite[] soundIcons;
     [SerializeField] TMP_InputField[] nameInputFields;
@@ -16,6 +18,8 @@ public class SettingsMenu : MonoBehaviour
     {
         sfxVolumeSlider.value = AppManager.Instance.SfxVolume;
         musicVolumeSlider.value = AppManager.Instance.MusicVolume;
+        defaultStartingLifeSlider.value = AppManager.Instance.DefaultStartingLife / AppManager.StartingLifeMultiplier;
+        defaultNumberOfPlayersSlider.value = AppManager.Instance.DefaultNumberOfPlayers;
 
         int i = 0;
 
@@ -100,5 +104,15 @@ public class SettingsMenu : MonoBehaviour
         Symbol symbol = (Symbol)symbolDropdowns[playerIndex].value;
         
         AppManager.Instance.SetPlayerSymbol(symbol, playerIndex);
+    }
+
+    public void ChangeDefaultStartingLife(float value)
+    {
+        AppManager.Instance.DefaultStartingLife = (int)value * AppManager.StartingLifeMultiplier;
+    }
+
+    public void ChangeDefaultNumberOfPlayers(float value)
+    {
+        AppManager.Instance.DefaultNumberOfPlayers = (int)value;
     }
 }

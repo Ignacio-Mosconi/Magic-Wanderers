@@ -31,12 +31,14 @@ public class AppManager : MonoBehaviour
     }
     #endregion
 
-    const int MaxPlayers = 10;
-    const int MinPlayers = 2;
+    public const int MaxPlayers = 10;
+    public const int MinPlayers = 2;
+    public const int StartingLifeMultiplier = 10;
+    public const int MaxSimultaneousPlayers = 4;
 
     PlayerProfile[] playerProfiles;
-    int defaultNumberOfPlayers;
     int defaultStartingLife;
+    int defaultNumberOfPlayers;
     float sfxVolume;
     float musicVolume;
 
@@ -55,8 +57,8 @@ public class AppManager : MonoBehaviour
     {
         playerProfiles = new PlayerProfile[MaxPlayers];
 
-        defaultNumberOfPlayers = PlayerPrefs.GetInt("DefaultNumberOfPlayers", MinPlayers);
         defaultStartingLife = PlayerPrefs.GetInt("DefaultStartingLife", 20);
+        defaultNumberOfPlayers = PlayerPrefs.GetInt("DefaultNumberOfPlayers", MinPlayers);
         for (int i = 0; i < MaxPlayers; i++)
         {
             playerProfiles[i].name = PlayerPrefs.GetString("Player" + (i + 1) + "Name", "Planeswalker #" + (i + 1));
@@ -110,16 +112,6 @@ public class AppManager : MonoBehaviour
             Debug.LogError("Warning: attempted to access to a player index out of range.");
     }
 
-    public int DefaultNumberOfPlayers
-    {
-        get { return defaultNumberOfPlayers; }
-        set
-        {
-            defaultNumberOfPlayers = value;
-            PlayerPrefs.SetInt("DefaultNumberOfPlayers", defaultNumberOfPlayers);
-        }
-    }
-
     public int DefaultStartingLife
     {
         get { return defaultStartingLife; }
@@ -127,6 +119,16 @@ public class AppManager : MonoBehaviour
         {
             defaultStartingLife = value;
             PlayerPrefs.SetInt("DefaultStartingLife", defaultStartingLife);
+        }
+    }
+
+    public int DefaultNumberOfPlayers
+    {
+        get { return defaultNumberOfPlayers; }
+        set
+        {
+            defaultNumberOfPlayers = value;
+            PlayerPrefs.SetInt("DefaultNumberOfPlayers", defaultNumberOfPlayers);
         }
     }
 

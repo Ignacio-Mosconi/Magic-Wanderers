@@ -10,31 +10,28 @@ public class DuelMenuScreen : MonoBehaviour
     [SerializeField] Slider startingLifeSlider;
     [SerializeField] TMP_Dropdown[] playerDropdowns;
 
-    const int StartingLifeMultiplier = 10;
-    const int MaxSimultaneousPlayers = 4;
-
     string[] playerNames;
     int numberOfPlayers;
     int startingLife;
 
     void Awake()
     {
-        playerNames = new string[MaxSimultaneousPlayers];
-
-        numberOfPlayers = AppManager.Instance.DefaultNumberOfPlayers;
-        startingLife = AppManager.Instance.DefaultStartingLife;
+        playerNames = new string[AppManager.MaxSimultaneousPlayers];
     }
 
     void OnEnable()
     {
+        startingLife = AppManager.Instance.DefaultStartingLife;
+        numberOfPlayers = AppManager.Instance.DefaultNumberOfPlayers;
+
+        startingLifeSlider.value = startingLife / AppManager.StartingLifeMultiplier;
         playersSlider.value = numberOfPlayers;
-        startingLifeSlider.value = startingLife / StartingLifeMultiplier;
 
         scrollRect.verticalNormalizedPosition = 1f;
 
         int i = 0;
         
-        for (i = numberOfPlayers; i < MaxSimultaneousPlayers; i++)
+        for (i = numberOfPlayers; i < AppManager.MaxSimultaneousPlayers; i++)
             playerOptions[i].SetActive(false);
         
         for (i = numberOfPlayers - 1; i >= 0; i--)
@@ -60,6 +57,12 @@ public class DuelMenuScreen : MonoBehaviour
         }
     }
 
+
+    public void SetStartingLife(float life)
+    {
+        startingLife = (int)life * AppManager.StartingLifeMultiplier;
+    }
+
     public void SetNumberOfPlayers(float players)
     {
         if (players > numberOfPlayers)
@@ -74,11 +77,6 @@ public class DuelMenuScreen : MonoBehaviour
         }
 
         numberOfPlayers = (int)players;
-    }
-
-    public void SetStartingLife(float life)
-    {
-        startingLife = (int)life * StartingLifeMultiplier;
     }
 
     public void SetPlayerName(int playerIndex)
