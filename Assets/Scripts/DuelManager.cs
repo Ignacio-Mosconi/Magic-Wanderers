@@ -46,6 +46,8 @@ public class DuelManager : MonoBehaviour
         
         duelBoard.gameObject.SetActive(true);
         duelBoard.SetUpBoard(currentNumberOfPlayers, currentStartingLife, playerNames);
+
+        AudioManager.Instance.PlayRandomTheme();
     }
 
     public void DisableDuelBoard()
@@ -54,6 +56,8 @@ public class DuelManager : MonoBehaviour
         currentStartingLife = 0;
 
         duelBoard.gameObject.SetActive(false);
+
+        AudioManager.Instance.StopMusicPlayback();
     }
 
     public int CurrentNumberOfPlayers
