@@ -14,6 +14,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] TMP_InputField[] nameInputFields;
     [SerializeField] TMP_Dropdown[] symbolDropdowns;
 
+    bool isSettingUpValues = true;
+
     void OnEnable()
     {
         sfxVolumeSlider.value = AppManager.Instance.SfxVolume;
@@ -38,6 +40,7 @@ public class SettingsMenu : MonoBehaviour
         }
 
         scrollRect.verticalNormalizedPosition = 1f;
+        isSettingUpValues = false;
     }
 
     public void SetSfxVolume(float volume)
@@ -94,16 +97,26 @@ public class SettingsMenu : MonoBehaviour
 
     public void ChangePlayerName(int playerIndex)
     {
-        string name = nameInputFields[playerIndex].text;
-        
-        AppManager.Instance.SetPlayerName(name, playerIndex);
+        if (!isSettingUpValues)
+        {
+            string name = nameInputFields[playerIndex].text;
+            
+            AppManager.Instance.SetPlayerName(name, playerIndex);
+
+            AudioManager.Instance.PlaySound("Menu Close");
+        }
     }
 
     public void ChangePlayerSymbol(int playerIndex)
     {
-        Symbol symbol = (Symbol)symbolDropdowns[playerIndex].value;
-        
-        AppManager.Instance.SetPlayerSymbol(symbol, playerIndex);
+        if (!isSettingUpValues)
+        {
+            Symbol symbol = (Symbol)symbolDropdowns[playerIndex].value;
+            
+            AppManager.Instance.SetPlayerSymbol(symbol, playerIndex);
+            
+            AudioManager.Instance.PlaySound("Menu Close");
+        }
     }
 
     public void ChangeDefaultStartingLife(float value)

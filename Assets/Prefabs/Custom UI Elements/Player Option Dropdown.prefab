@@ -1135,6 +1135,7 @@ GameObject:
   - component: {fileID: 9051815998831283439}
   - component: {fileID: 600889172441537078}
   - component: {fileID: 7660368781047930249}
+  - component: {fileID: 5271217338084315552}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -1232,6 +1233,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &5271217338084315552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714759471439279243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83123d4077fed2844a65a9210b35f693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6208255911863678369
 GameObject:
   m_ObjectHideFlags: 0

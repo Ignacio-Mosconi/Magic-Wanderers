@@ -13,6 +13,7 @@ public class DuelMenuScreen : MonoBehaviour
     string[] playerNames;
     int numberOfPlayers;
     int startingLife;
+    bool isSettingUpValues = true;
 
     void Awake()
     {
@@ -55,6 +56,8 @@ public class DuelMenuScreen : MonoBehaviour
             }
             i++;
         }
+
+        isSettingUpValues = false;
     }
 
 
@@ -81,7 +84,12 @@ public class DuelMenuScreen : MonoBehaviour
 
     public void SetPlayerName(int playerIndex)
     {
-        playerNames[playerIndex] = playerDropdowns[playerIndex].captionText.text;
+        if (!isSettingUpValues)
+        {
+            playerNames[playerIndex] = playerDropdowns[playerIndex].captionText.text;
+            
+            AudioManager.Instance.PlaySound("Menu Close");
+        }
     }
 
     public void StartDuel()
