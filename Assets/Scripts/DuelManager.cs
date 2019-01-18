@@ -41,6 +41,8 @@ public class DuelManager : MonoBehaviour
 
     public void EnableDuelBoard(int numberOfPlayers, int startingLife, string[] playerNames)
     {
+		Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         currentNumberOfPlayers = numberOfPlayers;
         currentStartingLife = startingLife;
         
@@ -52,6 +54,8 @@ public class DuelManager : MonoBehaviour
 
     public void DisableDuelBoard()
     {
+		Screen.sleepTimeout = SleepTimeout.SystemSetting;
+
         currentNumberOfPlayers = 0;
         currentStartingLife = 0;
 
