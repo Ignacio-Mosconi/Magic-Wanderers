@@ -8,6 +8,7 @@ public enum MixerType
     Music,
 }
 
+[RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
     #region Singleton
@@ -35,9 +36,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioMixer[] audioMixers;
     [SerializeField] AudioClip[] soundsUI;
     [SerializeField] AudioClip[] themes;
-
-    AudioSource sfxSource;
-    AudioSource musicSource;
+    [SerializeField] AudioSource sfxSource;
+    [SerializeField] AudioSource musicSource;
 
     const float MixerMultiplier = 12f;
     const float MuteValue = -80f;
@@ -50,14 +50,8 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        sfxSource = gameObject.AddComponent<AudioSource>();
-        sfxSource.outputAudioMixerGroup = audioMixers[(int)MixerType.Sfx].outputAudioMixerGroup;
-        sfxSource.playOnAwake = false;
-
-        musicSource = gameObject.AddComponent<AudioSource>();
-        musicSource.outputAudioMixerGroup = audioMixers[(int)MixerType.Music].outputAudioMixerGroup;
-        musicSource.playOnAwake = false;
-        musicSource.volume = 0.7f;
+        SetMixerVolume(MixerType.Sfx, AppManager.Instance.SfxVolume);
+        SetMixerVolume(MixerType.Music, AppManager.Instance.MusicVolume);
     }
 
     public void PlaySound(string soundName)
