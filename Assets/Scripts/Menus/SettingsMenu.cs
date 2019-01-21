@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -7,8 +8,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] ScrollRect scrollRect;
     [SerializeField] Slider sfxVolumeSlider;
     [SerializeField] Slider musicVolumeSlider;
-    [SerializeField] Slider defaultStartingLifeSlider;
-    [SerializeField] Slider defaultNumberOfPlayersSlider;
+    [SerializeField] ToggleValue[] defaultStartingLifeTVs;
+    [SerializeField] ToggleValue[] defaultNumberOfPlayersTVs;
     [SerializeField] Button[] muteButtons;
     [SerializeField] Sprite[] soundIcons;
     [SerializeField] TMP_InputField[] nameInputFields;
@@ -20,8 +21,20 @@ public class SettingsMenu : MonoBehaviour
     {
         sfxVolumeSlider.value = AppManager.Instance.SfxVolume;
         musicVolumeSlider.value = AppManager.Instance.MusicVolume;
-        defaultStartingLifeSlider.value = AppManager.Instance.DefaultStartingLife / AppManager.StartingLifeMultiplier;
-        defaultNumberOfPlayersSlider.value = AppManager.Instance.DefaultNumberOfPlayers;
+
+        foreach (ToggleValue tv in defaultStartingLifeTVs)
+        {
+            tv.toggle.isOn = (tv.value == AppManager.Instance.DefaultStartingLife);
+            tv.toggle.onValueChanged.AddListener(ChangeDefaultStartingLife);
+            tv.toggle.GetComponentInChildren<TextMeshProUGUI>().text = tv.value.ToString();
+        }
+
+        foreach (ToggleValue tv in defaultNumberOfPlayersTVs)
+        {
+            tv.toggle.isOn = (tv.value == AppManager.Instance.DefaultNumberOfPlayers);
+            tv.toggle.onValueChanged.AddListener(ChangeDefaultNumberOfPlayers);
+            tv.toggle.GetComponentInChildren<TextMeshProUGUI>().text = tv.value.ToString();
+        }
 
         int i = 0;
 
@@ -119,13 +132,25 @@ public class SettingsMenu : MonoBehaviour
         }
     }
 
-    public void ChangeDefaultStartingLife(float value)
+    public void ChangeDefaultStartingLife(bool wasToggledOn)
     {
-        AppManager.Instance.DefaultStartingLife = (int)value * AppManager.StartingLifeMultiplier;
+        if (!isSettingUpValues && wasToggledOn)
+        {
+            ToggleValue toggleValue = Array.Find(defaultStartingLifeTVs, tv => tv.toggle.isOn);
+            AppManager.Instance.DefaultStartingLife = toggleValue.value;
+
+            AudioManager.Instance.PlaySound("Menu Select");
+        }
     }
 
-    public void ChangeDefaultNumberOfPlayers(float value)
+    public void ChangeDefaultNumberOfPlayers(bool wasToggledOn)
     {
-        AppManager.Instance.DefaultNumberOfPlayers = (int)value;
+        if (!isSettingUpValues && wasToggledOn)
+        {
+            ToggleValue toggleValue = Array.Find(defaultNumberOfPlayersTVs, tv => tv.toggle.isOn);
+            AppManager.Instance.DefaultNumberOfPlayers = toggleValue.value;
+
+            AudioManager.Instance.PlaySound("Menu Select");
+        }
     }
 }

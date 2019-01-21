@@ -33,7 +33,6 @@ public class AppManager : MonoBehaviour
 
     public const int MaxPlayers = 10;
     public const int MinPlayers = 2;
-    public const int StartingLifeMultiplier = 10;
     public const int MaxSimultaneousPlayers = 4;
 
     PlayerProfile[] playerProfiles;
