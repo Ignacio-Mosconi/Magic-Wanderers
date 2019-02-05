@@ -69,7 +69,10 @@ public class AudioManager : MonoBehaviour
         AudioClip clip = Array.Find(themes, c => c.name == themeName);
 
         if (clip)
-            musicSource.PlayOneShot(clip);
+        {
+            musicSource.clip = clip;
+            musicSource.Play();
+        }
         else
             Debug.Log("Warning: the '" + themeName + "' theme could not be found.", gameObject);
     }
@@ -78,7 +81,8 @@ public class AudioManager : MonoBehaviour
     {
         int randomIndex = UnityEngine.Random.Range(0, themes.GetLength(0));
         
-        musicSource.PlayOneShot(themes[randomIndex]);
+        musicSource.clip = themes[randomIndex];
+        musicSource.Play();
     }
 
     public void StopMusicPlayback()
