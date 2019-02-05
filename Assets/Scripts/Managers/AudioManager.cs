@@ -127,4 +127,17 @@ public class AudioManager : MonoBehaviour
 
         return (mixerVolume == MuteValue);
     }
+
+    public float GetSoundLength(string soundName)
+    {
+        float length = 0;
+        AudioClip clip = Array.Find(soundsUI, c => c.name == soundName);
+
+        if (clip)
+            length = clip.length;
+        else
+            Debug.Log("Warning: the '" + soundName + "' theme could not be found.", gameObject);
+
+        return length;
+    }
 }
