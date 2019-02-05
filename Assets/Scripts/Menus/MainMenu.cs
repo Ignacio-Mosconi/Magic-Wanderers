@@ -60,6 +60,8 @@ public class MainMenu : MonoBehaviour
 
         currentScreenAnimators = currentScreen.screen.GetComponentsInChildren<Animator>();
         returnButtonAnimator = returnButton.GetComponent<Animator>();
+
+        AudioManager.Instance.PlayTheme("Menu Theme");
     }
 
     void EnablePreviousScreen()
@@ -156,6 +158,7 @@ public class MainMenu : MonoBehaviour
                 transitionTime = animationDuration;
         }
         
+        AudioManager.Instance.StopMusicPlayback();
         Invoke("DisableCurrentScreen", transitionTime);
     }
 
@@ -167,6 +170,7 @@ public class MainMenu : MonoBehaviour
             returnButton.gameObject.SetActive(true);
             returnButton.interactable = true;
         }
+        AudioManager.Instance.PlayTheme("Menu Theme");
     }
 
     public void PlayMenuSound(string soundName)

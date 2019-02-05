@@ -243,7 +243,7 @@ public class DuelBoard : MonoBehaviour
 		ToggleMenu();
 		duelMenuMainButton.gameObject.SetActive(false);
 		
-		MainMenu.Instance.EnableMainMenu();
 		DuelManager.Instance.DisableDuelBoard();
+		MainMenu.Instance.EnableMainMenu();
 	}
 }
