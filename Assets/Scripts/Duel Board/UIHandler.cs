@@ -105,7 +105,8 @@ public class UIHandler : MonoBehaviour
 		DiceThrower diceThrower = GetComponent<DiceThrower>();    
 		diePanel.SetActive(true);
 		
-		float showTime = dieImageAnimator.GetCurrentAnimatorStateInfo(0).length + dieTextSlideOutAnimation.length + diceThrower.ResultScreenDuration;
+		float showTime = dieImageAnimator.GetCurrentAnimatorStateInfo(0).length + dieTextSlideOutAnimation.length + 
+						diceThrower.ResultScreenDuration;
 		Invoke("HideDiePanel", showTime);
     }
 

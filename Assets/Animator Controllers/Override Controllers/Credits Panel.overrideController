@@ -8,4 +8,8 @@ AnimatorOverrideController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Credits Panel
   m_Controller: {fileID: 9100000, guid: 22ae20b37a9854645a201feb49aa6f09, type: 2}
-  m_Clips: []
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 604e0ee90243c4e48a517828b76dc0cf, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 71bb9cc1042d6ee459a07a0f19d1e594, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9158ecb37a511cf458f111126a9e06f6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2c47a78c2200f244984c124fb8b89b2b, type: 2}

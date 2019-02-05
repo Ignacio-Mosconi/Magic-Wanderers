@@ -102,13 +102,13 @@ public class MainMenu : MonoBehaviour
 
         returnButtonAnimator.SetTrigger("Hide");
         returnButton.interactable = false;
-        transitionTime = returnButtonAnimator.GetCurrentAnimatorStateInfo(0).length;
+        transitionTime = returnButtonAnimator.GetNextAnimatorStateInfo(0).length;
 
         foreach (Animator animator in currentScreenAnimators)
         {
             animator.SetTrigger("Hide");
 
-            float animationDuration = animator.GetCurrentAnimatorStateInfo(0).length;
+            float animationDuration = animator.GetNextAnimatorStateInfo(0).length;
 
             if (animationDuration > transitionTime)
                 transitionTime = animationDuration;
@@ -152,7 +152,7 @@ public class MainMenu : MonoBehaviour
         {
             animator.SetTrigger("Hide");
 
-            float animationDuration = animator.GetCurrentAnimatorStateInfo(0).length;
+            float animationDuration = animator.GetNextAnimatorStateInfo(0).length;
 
             if (animationDuration > transitionTime)
                 transitionTime = animationDuration;
