@@ -88,7 +88,7 @@ public class AudioManager : MonoBehaviour
         float currentMusicVolume;
         audioMixers[(int)MixerType.Music].GetFloat("Volume", out currentMusicVolume);
 
-        if (currentMusicVolume > 0f)
+        if (currentMusicVolume != MuteValue)
         {
             int randomIndex = 0;
 

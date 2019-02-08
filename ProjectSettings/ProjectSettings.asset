@@ -6,8 +6,8 @@ PlayerSettings:
   serializedVersion: 15
   productGUID: 4e383e08a15763847a7775a2deceac23
   AndroidProfiler: 0
-  AndroidFilterTouchesWhenObscured: 0
-  AndroidEnableSustainedPerformanceMode: 0
+  AndroidFilterTouchesWhenObscured: 1
+  AndroidEnableSustainedPerformanceMode: 1
   defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
@@ -147,8 +147,8 @@ PlayerSettings:
   enableFrameTimingStats: 0
   useHDRDisplay: 0
   m_ColorGamuts: 00000000
-  targetPixelDensity: 72
-  resolutionScalingMode: 0
+  targetPixelDensity: 144
+  resolutionScalingMode: 1
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
@@ -621,7 +621,7 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: MagicWanderers
   metroPackageVersion: 1.1.0.0
-  metroCertificatePath: C:\Users\nacho\Documents\Unity Projects\Personal Projects\Magic-Wanderers\Assets\WSATestCertificate.pfx
+  metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: Green Nacho
   metroCertificateIssuer: Green Nacho

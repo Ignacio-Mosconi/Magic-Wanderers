@@ -34,6 +34,7 @@ public class AppManager : MonoBehaviour
     public const int MaxPlayers = 10;
     public const int MinPlayers = 2;
     public const int MaxSimultaneousPlayers = 4;
+    public const int TargetFrameRate = 24;
 
     PlayerProfile[] playerProfiles;
     int defaultStartingLife;
@@ -48,6 +49,8 @@ public class AppManager : MonoBehaviour
             Debug.LogError("Warning: more than one App Manager in the secene.", gameObject);
             return;
         }
+
+        Application.targetFrameRate = TargetFrameRate;
 
         LoadPreferences();
     }
