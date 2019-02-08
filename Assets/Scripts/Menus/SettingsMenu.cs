@@ -57,11 +57,14 @@ public class SettingsMenu : MonoBehaviour
         isSettingUpValues = false;
     }
 
-    IEnumerator MuteMixer(MixerType mixerType, float waitTime)
+    IEnumerator MuteAudio(MixerType mixerType, float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
 
         AudioManager.Instance.MuteMixer(mixerType);
+
+        if (mixerType == MixerType.Music)
+            AudioManager.Instance.StopMusicPlayback();
     }
 
     public void SetSfxVolume(float volume)
@@ -69,7 +72,7 @@ public class SettingsMenu : MonoBehaviour
         AppManager.Instance.SfxVolume = volume;
         AudioManager.Instance.SetMixerVolume(MixerType.Sfx, volume);
 
-        if (volume == 0f)
+        if (AudioManager.Instance.IsVolumeLevelNull(volume))
             muteButtons[(int)MixerType.Sfx].image.sprite = soundIcons[1];
         else
             if (muteButtons[(int)MixerType.Sfx].image.sprite != soundIcons[0])
@@ -81,11 +84,17 @@ public class SettingsMenu : MonoBehaviour
         AppManager.Instance.MusicVolume = volume;
         AudioManager.Instance.SetMixerVolume(MixerType.Music, volume);
 
-        if (volume == 0f)
+        if (AudioManager.Instance.IsVolumeLevelNull(volume))
+        {
             muteButtons[(int)MixerType.Music].image.sprite = soundIcons[1];
+            AudioManager.Instance.StopMusicPlayback();
+        }
         else
             if (muteButtons[(int)MixerType.Music].image.sprite != soundIcons[0])
+            {
                 muteButtons[(int)MixerType.Music].image.sprite = soundIcons[0];
+                AudioManager.Instance.PlayTheme("Menu Theme");
+            }
     }
 
     public void ChangeSfxAvailability()
@@ -96,13 +105,12 @@ public class SettingsMenu : MonoBehaviour
             
             AudioManager.Instance.PlaySound("Menu Return");
             muteButtons[(int)MixerType.Sfx].image.sprite = soundIcons[1];
-            StartCoroutine(MuteMixer(MixerType.Sfx, waitTime));
+            StartCoroutine(MuteAudio(MixerType.Sfx, waitTime));
         }
         else
         {
             AudioManager.Instance.UnmuteMixer(MixerType.Sfx);
             muteButtons[(int)MixerType.Sfx].image.sprite = soundIcons[0];
-            AudioManager.Instance.PlaySound("Menu Select");
         }
     }
 
@@ -114,13 +122,14 @@ public class SettingsMenu : MonoBehaviour
 
             AudioManager.Instance.PlaySound("Menu Return");
             muteButtons[(int)MixerType.Music].image.sprite = soundIcons[1];
-            StartCoroutine(MuteMixer(MixerType.Music, waitTime));
+            StartCoroutine(MuteAudio(MixerType.Music, waitTime));
         }
         else
         {
             AudioManager.Instance.UnmuteMixer(MixerType.Music);
             muteButtons[(int)MixerType.Music].image.sprite = soundIcons[0];
             AudioManager.Instance.PlaySound("Menu Select");
+            AudioManager.Instance.PlayTheme("Menu Theme");
         }
     }
 

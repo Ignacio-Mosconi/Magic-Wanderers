@@ -61,6 +61,10 @@ public class MainMenu : MonoBehaviour
         currentScreenAnimators = currentScreen.screen.GetComponentsInChildren<Animator>();
         returnButtonAnimator = returnButton.GetComponent<Animator>();
 
+    }
+
+    void Start()
+    {
         AudioManager.Instance.PlayTheme("Menu Theme");
     }
 

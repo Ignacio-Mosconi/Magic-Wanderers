@@ -66,23 +66,40 @@ public class AudioManager : MonoBehaviour
 
     public void PlayTheme(string themeName)
     {
-        AudioClip clip = Array.Find(themes, c => c.name == themeName);
+        float currentMusicVolume;
+        audioMixers[(int)MixerType.Music].GetFloat("Volume", out currentMusicVolume);
 
-        if (clip)
+        if (currentMusicVolume != MuteValue)
         {
-            musicSource.clip = clip;
-            musicSource.Play();
+            AudioClip clip = Array.Find(themes, c => c.name == themeName);
+
+            if (clip)
+            {
+                musicSource.clip = clip;
+                musicSource.Play();
+            }
+            else
+                Debug.Log("Warning: the '" + themeName + "' theme could not be found.", gameObject);
         }
-        else
-            Debug.Log("Warning: the '" + themeName + "' theme could not be found.", gameObject);
     }
 
     public void PlayRandomTheme()
     {
-        int randomIndex = UnityEngine.Random.Range(0, themes.GetLength(0));
-        
-        musicSource.clip = themes[randomIndex];
-        musicSource.Play();
+        float currentMusicVolume;
+        audioMixers[(int)MixerType.Music].GetFloat("Volume", out currentMusicVolume);
+
+        if (currentMusicVolume > 0f)
+        {
+            int randomIndex = 0;
+
+            while (themes[randomIndex].name == "Menu Theme")
+            {
+                randomIndex = UnityEngine.Random.Range(0, themes.GetLength(0));
+                
+                musicSource.clip = themes[randomIndex];
+                musicSource.Play();
+            }
+        }
     }
 
     public void StopMusicPlayback()
@@ -95,7 +112,9 @@ public class AudioManager : MonoBehaviour
 
     public void SetMixerVolume(MixerType mixerType, float volume)
     {
-        audioMixers[(int)mixerType].SetFloat("Volume", Mathf.Log(volume) * MixerMultiplier);
+        float desiredMixerLevel = Mathf.Max(Mathf.Log(volume) * MixerMultiplier, MuteValue);
+        
+        audioMixers[(int)mixerType].SetFloat("Volume", desiredMixerLevel);
     }
 
     public void MuteMixer(MixerType mixerType)
@@ -120,7 +139,7 @@ public class AudioManager : MonoBehaviour
                 break;
         }
 
-        audioMixers[(int)mixerType].SetFloat("Volume", originalVolume);
+        audioMixers[(int)mixerType].SetFloat("Volume", Mathf.Log(originalVolume) * MixerMultiplier);
     }
 
     public bool IsMixerMuted(MixerType mixerType)
@@ -130,6 +149,11 @@ public class AudioManager : MonoBehaviour
         audioMixers[(int)mixerType].GetFloat("Volume", out mixerVolume);
 
         return (mixerVolume == MuteValue);
+    }
+
+    public bool IsVolumeLevelNull(float volume)
+    {
+        return (Mathf.Log(volume) * MixerMultiplier <= MuteValue);
     }
 
     public float GetSoundLength(string soundName)

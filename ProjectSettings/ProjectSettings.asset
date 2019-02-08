@@ -621,11 +621,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: MagicWanderers
   metroPackageVersion: 1.1.0.0
-  metroCertificatePath: 
+  metroCertificatePath: C:\Users\nacho\Documents\Unity Projects\Personal Projects\Magic-Wanderers\Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: Green Nacho
+  metroCertificateIssuer: Green Nacho
+  metroCertificateNotAfter: 8090e2c29adcd501
   metroApplicationDescription: Magic Life Counter
   wsaImages: {}
   metroTileShortName: Magic Wanderers
