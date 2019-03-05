@@ -48,12 +48,6 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("Warning: more than one Audio Manager in the secene.", gameObject);
     }
 
-    void Start()
-    {
-        SetMixerVolume(MixerType.Sfx, AppManager.Instance.SfxVolume);
-        SetMixerVolume(MixerType.Music, AppManager.Instance.MusicVolume);
-    }
-
     public void PlaySound(string soundName)
     {
         AudioClip clip = Array.Find(soundsUI, c => c.name == soundName);
@@ -115,11 +109,18 @@ public class AudioManager : MonoBehaviour
         float desiredMixerLevel = Mathf.Max(Mathf.Log(volume) * MixerMultiplier, MuteValue);
         
         audioMixers[(int)mixerType].SetFloat("Volume", desiredMixerLevel);
+
+        if (desiredMixerLevel > MuteValue && AppManager.Instance.IsMixerMuted(mixerType))
+            AppManager.Instance.SetMixerMuted(mixerType, false);
+        else
+            if (desiredMixerLevel == MuteValue && !AppManager.Instance.IsMixerMuted(mixerType))
+                AppManager.Instance.SetMixerMuted(mixerType, true);
     }
 
     public void MuteMixer(MixerType mixerType)
     {
-        audioMixers[(int)mixerType].SetFloat("Volume", MuteValue);
+        AppManager.Instance.SetMixerMuted(mixerType, true);
+        audioMixers[(int)mixerType].SetFloat("Volume", MuteValue);    
     }
 
     public void UnmuteMixer(MixerType mixerType)
@@ -135,10 +136,11 @@ public class AudioManager : MonoBehaviour
                 originalVolume = AppManager.Instance.MusicVolume;
                 break;
             default:
-                originalVolume = MuteValue;
+                originalVolume = 0f;
                 break;
         }
 
+        AppManager.Instance.SetMixerMuted(mixerType, false);
         audioMixers[(int)mixerType].SetFloat("Volume", Mathf.Log(originalVolume) * MixerMultiplier);
     }
 

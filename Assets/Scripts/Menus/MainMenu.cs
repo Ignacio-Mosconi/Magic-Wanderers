@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public struct MenuScreen
 {
     public GameObject screen;
-    public int index;
+    public GameObject previousScreen;
 }
 
 public class MainMenu : MonoBehaviour
@@ -33,7 +33,9 @@ public class MainMenu : MonoBehaviour
     }
     #endregion
     
+    [Header("App Screens")]
     [SerializeField] MenuScreen[] menuScreens;
+    [Header("Other Menu References")]
     [SerializeField] GameObject mainScreen;
     [SerializeField] Button returnButton;
 
@@ -76,12 +78,8 @@ public class MainMenu : MonoBehaviour
         currentScreen = previousScreen;
         currentScreenAnimators = currentScreen.screen.GetComponentsInChildren<Animator>();
 
-        if (currentScreen.index > 0)
-        {
-            previousScreen = Array.Find(menuScreens, menuScreen => menuScreen.index == currentScreen.index - 1);
-            returnButtonAnimator.SetTrigger("Show");
-            returnButton.interactable = true;
-        }
+        if (currentScreen.previousScreen)
+            previousScreen = Array.Find(menuScreens, menuScreen => menuScreen.screen == currentScreen.previousScreen);
         else
             returnButton.gameObject.SetActive(false);
     }
@@ -104,9 +102,12 @@ public class MainMenu : MonoBehaviour
     {
         float transitionTime = 0f;
 
-        returnButtonAnimator.SetTrigger("Hide");
-        returnButton.interactable = false;
-        transitionTime = returnButtonAnimator.GetNextAnimatorStateInfo(0).length;
+        if (!currentScreen.previousScreen)
+        {
+            returnButtonAnimator.SetTrigger("Hide");
+            returnButton.interactable = false;
+            transitionTime = returnButtonAnimator.GetNextAnimatorStateInfo(0).length;
+        }
 
         foreach (Animator animator in currentScreenAnimators)
         {
@@ -169,7 +170,7 @@ public class MainMenu : MonoBehaviour
     public void EnableMainMenu()
     {
         currentScreen.screen.SetActive(true);
-        if (currentScreen.index != 0)
+        if (currentScreen.previousScreen)
         {
             returnButton.gameObject.SetActive(true);
             returnButton.interactable = true;

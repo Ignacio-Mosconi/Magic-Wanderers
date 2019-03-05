@@ -41,6 +41,7 @@ public class AppManager : MonoBehaviour
     int defaultNumberOfPlayers;
     float sfxVolume;
     float musicVolume;
+    bool[] isMixerMuted = { false, false };
 
     void Awake()
     {
@@ -68,6 +69,8 @@ public class AppManager : MonoBehaviour
         }
         sfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
+        isMixerMuted[(int)MixerType.Sfx] = Convert.ToBoolean(PlayerPrefs.GetInt("SfxMuted", 0));
+        isMixerMuted[(int)MixerType.Music] = Convert.ToBoolean(PlayerPrefs.GetInt("MusicMuted", 0));
     }
 
     #region Getters & Setters
@@ -92,6 +95,11 @@ public class AppManager : MonoBehaviour
         return playerProfile.symbol;
     }
 
+    public bool IsMixerMuted(MixerType mixerType)
+    {
+        return isMixerMuted[(int)mixerType];
+    }
+
     public void SetPlayerName(string name, int playerIndex)
     {
         if (playerIndex >= 0 && playerIndex < playerProfiles.GetLength(0))
@@ -112,6 +120,21 @@ public class AppManager : MonoBehaviour
         }
         else
             Debug.LogError("Warning: attempted to access to a player index out of range.");
+    }
+
+    public void SetMixerMuted(MixerType mixerType, bool value)
+    {
+        isMixerMuted[(int)mixerType] = value;
+        
+        switch (mixerType)
+        {
+            case MixerType.Sfx:
+                PlayerPrefs.SetInt("SfxMuted", Convert.ToInt16(value));
+                break;
+            case MixerType.Music:
+                PlayerPrefs.SetInt("MusicMuted", Convert.ToInt16(value));
+                break;
+        }
     }
 
     public int DefaultStartingLife

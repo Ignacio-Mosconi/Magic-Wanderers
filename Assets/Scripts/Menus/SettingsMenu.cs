@@ -6,22 +6,43 @@ using TMPro;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [SerializeField] ScrollRect scrollRect;
+    public const float DefaultVolumeSliderValue = 0.75f;
+
+    [Header("Audio References")]
     [SerializeField] Slider sfxVolumeSlider;
     [SerializeField] Slider musicVolumeSlider;
-    [SerializeField] ToggleValue[] defaultStartingLifeTVs;
-    [SerializeField] ToggleValue[] defaultNumberOfPlayersTVs;
     [SerializeField] Button[] muteButtons;
     [SerializeField] Sprite[] soundIcons;
+
+    [Header("Profiles References")]
+    [SerializeField] ScrollRect scrollRect;
     [SerializeField] TMP_InputField[] nameInputFields;
     [SerializeField] TMP_Dropdown[] symbolDropdowns;
 
+    [Header("Preferences References")]
+    [SerializeField] ToggleValue[] defaultStartingLifeTVs;
+    [SerializeField] ToggleValue[] defaultNumberOfPlayersTVs;
+
     bool isSettingUpValues = true;
 
-    void OnEnable()
+    void Start()
     {
+        bool wasSfxMuted = AppManager.Instance.IsMixerMuted(MixerType.Sfx);
+        bool wasMusicMuted = AppManager.Instance.IsMixerMuted(MixerType.Music);
+
         sfxVolumeSlider.value = AppManager.Instance.SfxVolume;
         musicVolumeSlider.value = AppManager.Instance.MusicVolume;
+
+        if (wasSfxMuted)
+        {
+            muteButtons[(int)MixerType.Sfx].image.sprite = soundIcons[1];
+            StartCoroutine(MuteAudio(MixerType.Sfx, 0f));
+        }
+        if (wasMusicMuted)
+        {
+            muteButtons[(int)MixerType.Music].image.sprite = soundIcons[1];
+            StartCoroutine(MuteAudio(MixerType.Music, 0f));
+        }
 
         foreach (ToggleValue tv in defaultStartingLifeTVs)
         {
@@ -73,10 +94,16 @@ public class SettingsMenu : MonoBehaviour
         AudioManager.Instance.SetMixerVolume(MixerType.Sfx, volume);
 
         if (AudioManager.Instance.IsVolumeLevelNull(volume))
+        {
+            AppManager.Instance.SetMixerMuted(MixerType.Sfx, true);
             muteButtons[(int)MixerType.Sfx].image.sprite = soundIcons[1];
+        }
         else
             if (muteButtons[(int)MixerType.Sfx].image.sprite != soundIcons[0])
+            {
+                AppManager.Instance.SetMixerMuted(MixerType.Sfx, false);
                 muteButtons[(int)MixerType.Sfx].image.sprite = soundIcons[0];
+            }
     }
 
     public void SetMusicVolume(float volume)
@@ -86,12 +113,14 @@ public class SettingsMenu : MonoBehaviour
 
         if (AudioManager.Instance.IsVolumeLevelNull(volume))
         {
+            AppManager.Instance.SetMixerMuted(MixerType.Music, true);
             muteButtons[(int)MixerType.Music].image.sprite = soundIcons[1];
             AudioManager.Instance.StopMusicPlayback();
         }
         else
             if (muteButtons[(int)MixerType.Music].image.sprite != soundIcons[0])
             {
+                AppManager.Instance.SetMixerMuted(MixerType.Music, false);
                 muteButtons[(int)MixerType.Music].image.sprite = soundIcons[0];
                 AudioManager.Instance.PlayTheme("Menu Theme");
             }
@@ -104,12 +133,15 @@ public class SettingsMenu : MonoBehaviour
             float waitTime = AudioManager.Instance.GetSoundLength("Menu Return");
             
             AudioManager.Instance.PlaySound("Menu Return");
+            
             muteButtons[(int)MixerType.Sfx].image.sprite = soundIcons[1];
             StartCoroutine(MuteAudio(MixerType.Sfx, waitTime));
         }
         else
         {
             AudioManager.Instance.UnmuteMixer(MixerType.Sfx);
+            if (AudioManager.Instance.IsVolumeLevelNull(AppManager.Instance.SfxVolume))
+                sfxVolumeSlider.value = DefaultVolumeSliderValue;
             muteButtons[(int)MixerType.Sfx].image.sprite = soundIcons[0];
         }
     }
@@ -117,18 +149,20 @@ public class SettingsMenu : MonoBehaviour
     public void ChangeMusicAvailability()
     {
         if (!AudioManager.Instance.IsMixerMuted(MixerType.Music))
-        {
+        {   
             float waitTime = AudioManager.Instance.GetSoundLength("Menu Return");
-
+            
             AudioManager.Instance.PlaySound("Menu Return");
+
             muteButtons[(int)MixerType.Music].image.sprite = soundIcons[1];
             StartCoroutine(MuteAudio(MixerType.Music, waitTime));
         }
         else
         {
             AudioManager.Instance.UnmuteMixer(MixerType.Music);
+            if (AudioManager.Instance.IsVolumeLevelNull(AppManager.Instance.MusicVolume))
+                musicVolumeSlider.value = DefaultVolumeSliderValue;
             muteButtons[(int)MixerType.Music].image.sprite = soundIcons[0];
-            AudioManager.Instance.PlaySound("Menu Select");
             AudioManager.Instance.PlayTheme("Menu Theme");
         }
     }
@@ -150,6 +184,8 @@ public class SettingsMenu : MonoBehaviour
         if (!isSettingUpValues)
         {
             Symbol symbol = (Symbol)symbolDropdowns[playerIndex].value;
+
+            Debug.Log(symbol, symbolDropdowns[playerIndex]);
             
             AppManager.Instance.SetPlayerSymbol(symbol, playerIndex);
             
