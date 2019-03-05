@@ -88,6 +88,13 @@ public class SettingsMenu : MonoBehaviour
             AudioManager.Instance.StopMusicPlayback();
     }
 
+    IEnumerator DisableInputFieldInteractability(int playerIndex)
+    {
+        yield return new WaitForEndOfFrame();
+
+        nameInputFields[playerIndex].interactable = false;
+    }
+
     public void SetSfxVolume(float volume)
     {
         AppManager.Instance.SfxVolume = volume;
@@ -174,6 +181,7 @@ public class SettingsMenu : MonoBehaviour
             string name = nameInputFields[playerIndex].text;
             
             AppManager.Instance.SetPlayerName(name, playerIndex);
+            StartCoroutine(DisableInputFieldInteractability(playerIndex));
 
             AudioManager.Instance.PlaySound("Menu Close");
         }
@@ -184,8 +192,6 @@ public class SettingsMenu : MonoBehaviour
         if (!isSettingUpValues)
         {
             Symbol symbol = (Symbol)symbolDropdowns[playerIndex].value;
-
-            Debug.Log(symbol, symbolDropdowns[playerIndex]);
             
             AppManager.Instance.SetPlayerSymbol(symbol, playerIndex);
             
