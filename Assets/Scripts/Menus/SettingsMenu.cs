@@ -95,6 +95,13 @@ public class SettingsMenu : MonoBehaviour
         nameInputFields[playerIndex].interactable = false;
     }
 
+    IEnumerator DisableDropDownInteractability(int playerIndex)
+    {
+        yield return new WaitForEndOfFrame();
+
+        symbolDropdowns[playerIndex].interactable = false;
+    }
+
     public void SetSfxVolume(float volume)
     {
         AppManager.Instance.SfxVolume = volume;
@@ -194,7 +201,8 @@ public class SettingsMenu : MonoBehaviour
             Symbol symbol = (Symbol)symbolDropdowns[playerIndex].value;
             
             AppManager.Instance.SetPlayerSymbol(symbol, playerIndex);
-            
+            StartCoroutine(DisableDropDownInteractability(playerIndex));
+
             AudioManager.Instance.PlaySound("Menu Close");
         }
     }
