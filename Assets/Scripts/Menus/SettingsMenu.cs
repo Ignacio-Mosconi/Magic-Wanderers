@@ -15,7 +15,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] Sprite[] soundIcons;
 
     [Header("Profiles References")]
-    [SerializeField] ScrollRect scrollRect;
+    [SerializeField] ScrollRect profilesScrollRect;
     [SerializeField] TMP_InputField[] nameInputFields;
     [SerializeField] TMP_Dropdown[] symbolDropdowns;
 
@@ -74,7 +74,6 @@ public class SettingsMenu : MonoBehaviour
             i++;
         }
 
-        scrollRect.verticalNormalizedPosition = 1f;
         isSettingUpValues = false;
     }
 
@@ -227,5 +226,10 @@ public class SettingsMenu : MonoBehaviour
 
             AudioManager.Instance.PlaySound("Menu Select");
         }
+    }
+
+    public void ResetProfilesScrollRectPosition()
+    {
+        profilesScrollRect.verticalNormalizedPosition = 1f;
     }
 }
