@@ -31,40 +31,60 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: ca790d8f912482446b6a7ef80a39afe1, type: 3}
-    totalSpriteSurfaceArea: 759375
+    totalSpriteSurfaceArea: 1265625
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 7772171293449a442acc8e5f4f121a4f, type: 3}
+  - {fileID: 21300000, guid: 56459e33aab427b49bc51c5f42dd2dd9, type: 3}
   - {fileID: 21300000, guid: 5b4632140c6214b4e9a36da9c5fd5e81, type: 3}
   - {fileID: 21300000, guid: ef1c51a454ffbef408726511439e6e6f, type: 3}
   - {fileID: 21300000, guid: fb3a66e43cbbb3e469ef259cff903b76, type: 3}
+  - {fileID: 21300000, guid: 9e178d559c599ff4c9ecfe5243ca5a8b, type: 3}
+  - {fileID: 21300000, guid: d69afaa6e6033c04c8c0efda586dee5d, type: 3}
   - {fileID: 21300000, guid: 2714b928af2de514a8b10dc2b6bc44c0, type: 3}
   - {fileID: 21300000, guid: 0d4a8b68d94af0a41b10c932118a6cd6, type: 3}
   - {fileID: 21300000, guid: 0d77c87802daa324a865ff30e39cf7fc, type: 3}
+  - {fileID: 21300000, guid: 3fbbc8c99893dee4da15894823f37ba4, type: 3}
   - {fileID: 21300000, guid: b44b30f92f8a6e54696aa216a1ba678a, type: 3}
   - {fileID: 21300000, guid: 1f10a74a0cc230b43a14e9e5bf04f56f, type: 3}
   - {fileID: 21300000, guid: a51a29daf60c1ed42bf5799a6e0b0e6c, type: 3}
+  - {fileID: 21300000, guid: e71810eb5c3978445a5e0b9669bdd91c, type: 3}
+  - {fileID: 21300000, guid: 73a7770cdf7ed26499a707f737f1907b, type: 3}
   - {fileID: 21300000, guid: 346c8e4c30c0f7940a3f68806e023bae, type: 3}
   - {fileID: 21300000, guid: e3b0906c3900d3e478e3d32101175d61, type: 3}
+  - {fileID: 21300000, guid: 2623b36c1ddd8a14585813574dff7110, type: 3}
+  - {fileID: 21300000, guid: 6359ea9c4aef54c4f99b9a05204c002e, type: 3}
   - {fileID: 21300000, guid: 648c776da2fe8944687207615a86eca7, type: 3}
   - {fileID: 21300000, guid: 191546cddefd8cc4f929e86acabcd767, type: 3}
   - {fileID: 21300000, guid: f98f631e531f52b4e81d72f677113e87, type: 3}
   - {fileID: 21300000, guid: a97dbb4e1066d8c459862ec80f695304, type: 3}
+  - {fileID: 21300000, guid: 594fa28f98f7bca408531408727bdae4, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Rakdos
+  - Azorius
   - White Mana
   - Selesnya (Grayscale)
   - Green Mana
+  - Azorius (Grayscale)
+  - Rakdos (Grayscale)
   - Izzet
   - Golgari (Grayscale)
   - Izzet (Grayscale)
+  - Orzhov
   - Boros (Grayscale)
   - Golgari
   - Red Mana
+  - Simic
+  - Orzhov (Grayscale)
   - Selesnya
   - Black Mana
+  - Gruul (Grayscale)
+  - Gruul
   - Dimir
   - Blue Mana
   - Boros
   - Dimir (Grayscale)
+  - Simic (Grayscale)
   m_Tag: Symbols
   m_IsVariant: 0

@@ -8,7 +8,18 @@ public class SwipeMenuScrollRect : ScrollRect
     [SerializeField] int numberOfSteps;
     [SerializeField] float clampDuration;
     int currentStep;
+    float swapNormalizedDistance;
     float previousScrollSensitivity;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        float contentWidth = content.GetComponent<RectTransform>().sizeDelta.x;
+        float swapDistance = contentWidth / (numberOfSteps * 2f);
+        
+        swapNormalizedDistance = Mathf.InverseLerp(0f, contentWidth, swapDistance);
+    }
 
     protected override void OnEnable()
     {
@@ -24,10 +35,10 @@ public class SwipeMenuScrollRect : ScrollRect
 
         float currentNormalizedPosition = Mathf.InverseLerp(1, numberOfSteps, currentStep);
 
-        if (currentStep < numberOfSteps && horizontalNormalizedPosition > currentNormalizedPosition + currentNormalizedPosition / 2f)
+        if (currentStep < numberOfSteps && horizontalNormalizedPosition > currentNormalizedPosition + swapNormalizedDistance)
             currentStep++;
 
-        if (currentStep > 1 && horizontalNormalizedPosition < currentNormalizedPosition - currentNormalizedPosition / 2f)
+        if (currentStep > 1 && horizontalNormalizedPosition < currentNormalizedPosition - swapNormalizedDistance)
             currentStep--;
 
         previousScrollSensitivity = scrollSensitivity;

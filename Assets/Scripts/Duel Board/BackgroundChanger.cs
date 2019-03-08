@@ -3,16 +3,9 @@ using UnityEngine.UI;
 
 public enum Symbol
 {
-    White,
-    Blue,
-    Black,
-    Red,
-    Green,
-	Boros,
-	Dimir,
-	Golgari,
-	Izzet,
-	Selesnya,
+    White, Blue, Black, Red, Green,
+	Boros, Dimir, Golgari, Izzet, Selesnya, 
+	Azorius,Gruul, Orzhov, Rakdos,Simic,
 	Count
 }
 
@@ -43,6 +36,11 @@ public class BackgroundChanger : MonoBehaviour
 			case Symbol.Golgari:
 			case Symbol.Izzet:
 			case Symbol.Selesnya:
+			case Symbol.Azorius:
+			case Symbol.Gruul:
+			case Symbol.Orzhov:
+			case Symbol.Rakdos:
+			case Symbol.Simic:
 				symbolButton.image.sprite = symbolSprites[symbolIndex];
 				backgroundImage.sprite = backgroundSprites[symbolIndex];
 				break;
