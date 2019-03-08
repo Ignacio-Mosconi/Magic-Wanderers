@@ -8,6 +8,11 @@ public enum Symbol
     Black,
     Red,
     Green,
+	Boros,
+	Dimir,
+	Golgari,
+	Izzet,
+	Selesnya,
 	Count
 }
 
@@ -33,6 +38,11 @@ public class BackgroundChanger : MonoBehaviour
 			case Symbol.Black:
 			case Symbol.Red:
 			case Symbol.Green:
+			case Symbol.Boros:
+			case Symbol.Dimir:
+			case Symbol.Golgari:
+			case Symbol.Izzet:
+			case Symbol.Selesnya:
 				symbolButton.image.sprite = symbolSprites[symbolIndex];
 				backgroundImage.sprite = backgroundSprites[symbolIndex];
 				break;

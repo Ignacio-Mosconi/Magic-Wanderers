@@ -31,20 +31,40 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: ca790d8f912482446b6a7ef80a39afe1, type: 3}
-    totalSpriteSurfaceArea: 253125
+    totalSpriteSurfaceArea: 759375
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 5b4632140c6214b4e9a36da9c5fd5e81, type: 3}
+  - {fileID: 21300000, guid: ef1c51a454ffbef408726511439e6e6f, type: 3}
   - {fileID: 21300000, guid: fb3a66e43cbbb3e469ef259cff903b76, type: 3}
+  - {fileID: 21300000, guid: 2714b928af2de514a8b10dc2b6bc44c0, type: 3}
+  - {fileID: 21300000, guid: 0d4a8b68d94af0a41b10c932118a6cd6, type: 3}
+  - {fileID: 21300000, guid: 0d77c87802daa324a865ff30e39cf7fc, type: 3}
+  - {fileID: 21300000, guid: b44b30f92f8a6e54696aa216a1ba678a, type: 3}
+  - {fileID: 21300000, guid: 1f10a74a0cc230b43a14e9e5bf04f56f, type: 3}
   - {fileID: 21300000, guid: a51a29daf60c1ed42bf5799a6e0b0e6c, type: 3}
+  - {fileID: 21300000, guid: 346c8e4c30c0f7940a3f68806e023bae, type: 3}
   - {fileID: 21300000, guid: e3b0906c3900d3e478e3d32101175d61, type: 3}
+  - {fileID: 21300000, guid: 648c776da2fe8944687207615a86eca7, type: 3}
   - {fileID: 21300000, guid: 191546cddefd8cc4f929e86acabcd767, type: 3}
+  - {fileID: 21300000, guid: f98f631e531f52b4e81d72f677113e87, type: 3}
+  - {fileID: 21300000, guid: a97dbb4e1066d8c459862ec80f695304, type: 3}
   m_PackedSpriteNamesToIndex:
   - White Mana
+  - Selesnya (Grayscale)
   - Green Mana
+  - Izzet
+  - Golgari (Grayscale)
+  - Izzet (Grayscale)
+  - Boros (Grayscale)
+  - Golgari
   - Red Mana
+  - Selesnya
   - Black Mana
+  - Dimir
   - Blue Mana
+  - Boros
+  - Dimir (Grayscale)
   m_Tag: Symbols
   m_IsVariant: 0
