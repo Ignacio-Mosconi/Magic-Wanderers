@@ -7909,6 +7909,16 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3284909402735441673, guid: d3c2c04cb29b51b418cb4e8a0d62b0b0,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3284909402735441673, guid: d3c2c04cb29b51b418cb4e8a0d62b0b0,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190253
+      objectReference: {fileID: 0}
     - target: {fileID: 5178503891343332348, guid: d3c2c04cb29b51b418cb4e8a0d62b0b0,
         type: 3}
       propertyPath: m_havePropertiesChanged
