@@ -20,9 +20,6 @@ public class DuelBoard : MonoBehaviour
     [SerializeField] Vector2 duelMenuButtonThreePlayersMinAnchors = new Vector2(0.4f, 0.35f);
     [SerializeField] Vector2 duelMenuButtonThreePlayersMaxAnchors = new Vector2(0.6f, 0.45f);
 
-
-    const float PostDiceThrowDelay = 0.1f;
-
     LifeCounter[] playersLifecounters;
     ExtrasCounter[] playersExtrasCounters;
     BackgroundChanger[] playersBackgroundChangers;
@@ -74,6 +71,14 @@ public class DuelBoard : MonoBehaviour
         rectTransform.anchoredPosition = Vector2.zero;
     }
 
+    bool HaveDiceFinishedRolling()
+    {
+        foreach (DiceThrower diceThrower in playersDiceThrowers)
+            if (diceThrower.IsCurrentlyRolling)
+                return false;
+        return true;
+    }
+
     IEnumerator PerformDiceRoll(float rollDuration)
     {
         int highestRoll = 0;
@@ -86,7 +91,7 @@ public class DuelBoard : MonoBehaviour
         foreach (DiceThrower diceThrower in playersDiceThrowers)
             diceThrower.RollDie(rollDuration);
 
-        yield return new WaitForSeconds(rollDuration + PostDiceThrowDelay);
+        yield return new WaitUntil(() => HaveDiceFinishedRolling());
 
         foreach (DiceThrower diceThrower in playersDiceThrowers)
         {
@@ -94,10 +99,13 @@ public class DuelBoard : MonoBehaviour
 
             while (results[i] == highestRoll)
             {
-                bool shouldFirstRollChange = (UnityEngine.Random.Range(0, 1) == 1) ? true : false;
+                bool shouldPreviousRollChange = (UnityEngine.Random.Range(0, 2) == 1) ? true : false;
 
-                if (shouldFirstRollChange)
+                if (shouldPreviousRollChange)
+                {
                     results[highestRollIndex] = playersDiceThrowers[highestRollIndex].QuickRoll();
+                    highestRoll = (results[highestRollIndex] >= results[i]) ? results[highestRollIndex] : 0;
+                }
                 else
                     results[i] = diceThrower.QuickRoll();
             }
@@ -121,7 +129,7 @@ public class DuelBoard : MonoBehaviour
             i++;
         }
 
-        float waitTime = playersDiceThrowers[0].ResultScreenDuration + playersUIHandlers[0].GetDiceTextAnimationDuration() - PostDiceThrowDelay;
+        float waitTime = playersDiceThrowers[0].ResultScreenDuration + playersUIHandlers[0].GetDiceTextAnimationDuration();
 
         yield return new WaitForSeconds(waitTime);
 

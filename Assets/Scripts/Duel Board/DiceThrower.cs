@@ -14,10 +14,13 @@ public class DiceThrower : MonoBehaviour
     [SerializeField] string loseText;
     
     int lastNumberRolled = 0;
+    bool isCurrentlyRolling = false;
 
     IEnumerator ThrowDie(float duration)
     {
         int totalSpins = (int)(duration / switchInterval);
+
+        isCurrentlyRolling = true;
 
         for (int i = 0; i < totalSpins; i++)
         {
@@ -25,6 +28,8 @@ public class DiceThrower : MonoBehaviour
             lastNumberRolled = Random.Range(1, dieSprites.GetLength(0) + 1);
             dieImage.sprite = dieSprites[lastNumberRolled - 1];
         }
+
+        isCurrentlyRolling = false;
     }
 
     public int QuickRoll()
@@ -64,6 +69,11 @@ public class DiceThrower : MonoBehaviour
 
     public float ResultScreenDuration
     {
-        get { return resultScreenDuration;}
+        get { return resultScreenDuration; }
+    }
+
+    public bool IsCurrentlyRolling
+    {
+        get { return isCurrentlyRolling; }
     }
 }

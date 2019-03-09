@@ -17,7 +17,6 @@ public class UIHandler : MonoBehaviour
     [SerializeField] Animator countersPanelAnimator;
     [SerializeField] Animator dieImageAnimator;
     [SerializeField] Animator dieTextAnimator;
-    [SerializeField] AnimationClip dieTextSlideOutAnimation;
 
     void DeactivateSymbolSelector()
     {
@@ -37,8 +36,10 @@ public class UIHandler : MonoBehaviour
 
     void HideDiePanel()
     {
+        dieImageAnimator.SetTrigger("Hide");
         dieTextAnimator.SetTrigger("Hide");
-        Invoke("DeactivateDiePanel", dieTextAnimator.GetCurrentAnimatorStateInfo(0).length);
+        Invoke("DeactivateDiePanel", Mathf.Max(dieImageAnimator.GetCurrentAnimatorStateInfo(0).length,
+                                        dieTextAnimator.GetCurrentAnimatorStateInfo(0).length));
     }
 
     public void HideButtons()
@@ -105,8 +106,9 @@ public class UIHandler : MonoBehaviour
         DiceThrower diceThrower = GetComponent<DiceThrower>();
         diePanel.SetActive(true);
 
-        float showTime = dieImageAnimator.GetCurrentAnimatorStateInfo(0).length + dieTextSlideOutAnimation.length +
+        float showTime = dieImageAnimator.GetCurrentAnimatorStateInfo(0).length + dieTextAnimator.GetCurrentAnimatorStateInfo(0).length +
                         diceThrower.ResultScreenDuration;
+        
         Invoke("HideDiePanel", showTime);
     }
 
@@ -132,6 +134,6 @@ public class UIHandler : MonoBehaviour
 
     public float GetDiceTextAnimationDuration()
     {
-        return (dieImageAnimator.GetCurrentAnimatorStateInfo(0).length);
+        return (dieTextAnimator.GetCurrentAnimatorStateInfo(0).length);
     }
 }
