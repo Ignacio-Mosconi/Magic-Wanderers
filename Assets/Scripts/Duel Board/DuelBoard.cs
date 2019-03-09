@@ -93,7 +93,14 @@ public class DuelBoard : MonoBehaviour
             results[i] = diceThrower.FetchLastRollResult();
 
             while (results[i] == highestRoll)
-                results[i] = diceThrower.QuickRoll();
+            {
+                bool shouldFirstRollChange = (UnityEngine.Random.Range(0, 1) == 1) ? true : false;
+
+                if (shouldFirstRollChange)
+                    results[highestRollIndex] = playersDiceThrowers[highestRollIndex].QuickRoll();
+                else
+                    results[i] = diceThrower.QuickRoll();
+            }
 
             if (results[i] > highestRoll)
             {
