@@ -34,7 +34,7 @@ public class AppManager : MonoBehaviour
     public const int MaxPlayers = 10;
     public const int MinPlayers = 2;
     public const int MaxSimultaneousPlayers = 4;
-    public const int TargetFrameRate = 24;
+    public const int TargetFrameRate = 15;
 
     PlayerProfile[] playerProfiles;
     int defaultStartingLife;
