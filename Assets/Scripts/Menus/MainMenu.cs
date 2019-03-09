@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public struct MenuScreen
@@ -35,9 +36,11 @@ public class MainMenu : MonoBehaviour
     
     [Header("App Screens")]
     [SerializeField] MenuScreen[] menuScreens;
+    
     [Header("Other Menu References")]
     [SerializeField] GameObject mainScreen;
     [SerializeField] Button returnButton;
+    [SerializeField] TextMeshProUGUI appVersionText;
 
     MenuScreen currentScreen;
     MenuScreen previousScreen;
@@ -63,6 +66,7 @@ public class MainMenu : MonoBehaviour
         currentScreenAnimators = currentScreen.screen.GetComponentsInChildren<Animator>();
         returnButtonAnimator = returnButton.GetComponent<Animator>();
 
+        appVersionText.text = "v" + Application.version;
     }
 
     void Start()
